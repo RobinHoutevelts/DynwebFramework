@@ -1,11 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE glassfish-web-app PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Servlet 3.0//EN" "http://glassfish.org/dtds/glassfish-web-app_3_0-1.dtd">
 <glassfish-web-app error-url="/error">
-  <context-root>/hp</context-root>
+  <context-root>/c</context-root>
   <class-loader delegate="true"/>
   <jsp-config>
     <property name="keepgenerated" value="true">
       <description>Keep a copy of the generated servlet class' java code.</description>
     </property>
   </jsp-config>
+  
+  
+  
+  
+  
+  <!-- Ik heb nog niet gecontroleerd of al deze tags beschikbaar zijn voor deze web.xml -->
+      <listener>
+        <description>ServletContextListener</description>
+        <listener-class>controller.ContextListener</listener-class>
+    </listener>
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>controller.Controller</servlet-class>
+    </servlet>
+    <welcome-file-list>  
+        <welcome-file>welcome.jsp</welcome-file>  
+    </welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/c</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+  
+  
+  
+  
+  
+  
 </glassfish-web-app>
