@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "Controller", urlPatterns = {"/c"})
-public class FrontController extends HttpServlet {
+public class Controller extends HttpServlet {
     
     private RequestHandlerFactory requestHandlerFactory;
     private AjaxHandlerFactory ajaxHandlerFactory;
@@ -38,7 +38,7 @@ public class FrontController extends HttpServlet {
                 response.setContentType("text/xml");
                 response.getWriter().write(executeString);
             } catch (IOException exception) {
-                Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, exception);
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, exception);
             }
         } else {
             response.setContentType("text/html;charset=UTF-8");

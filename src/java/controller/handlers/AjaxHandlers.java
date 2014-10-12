@@ -6,7 +6,8 @@ public enum AjaxHandlers {
      * Ajax-calls must always be handled. Therefor there isn't a default ajax-handler-class as for the normal request.
      * AjaxHandler is an abstract class, so don't use is as a default handler! Always specify a new handler class for a new ajax-requesttype.
      */
-    USERS_ONLINE ("UsersOnlineAjaxHandler");
+    APPROVE_QUESTION    ("ApproveQuestionAjaxHandler"),
+    DISAPPROVE_QUESTION ("DisapproveQuestionAjaxHandler");
     
     private final String ajaxHandlerClass;
     
