@@ -23,7 +23,7 @@ public class AjaxHandlerFactory {
             
             try {
                 Class ajaxHandlerClass = Class.forName(ah.getAjaxHandlerClass());
-                Constructor constructorClass = ajaxHandlerClass.getConstructor(Database.class, String.class);
+                Constructor constructorClass = ajaxHandlerClass.getConstructor(Database.class);
                 ajaxHandler = (AjaxHandler) constructorClass.newInstance(database);
             }
             catch (ClassNotFoundException   | // Thrown by 'Class.forName(String)' if the class cannot be located.
