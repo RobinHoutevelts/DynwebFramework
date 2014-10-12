@@ -39,4 +39,8 @@ public class User {
     public void setLevel(AccesLevel level) {
         this.level = level;
     }
+    
+    public boolean isAdmin() {return level.getLevel() >= 3;}
+    public boolean isUser() {return level.getLevel() >= 1;}
+    public boolean isBlocked() {return level.getLevel() < 0;}
 }

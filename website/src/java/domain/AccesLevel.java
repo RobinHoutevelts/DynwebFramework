@@ -3,9 +3,8 @@ package domain;
 public enum AccesLevel {
     
     ADMIN   (3),
-    MOD     (2),
     USER    (1),
-    BLOCKED (0);
+    BLOCKED (-1);
     
     private final int level;
     
