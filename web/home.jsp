@@ -1,3 +1,4 @@
+<%@page import="controller.handlers.RequestHandlers"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,6 +18,7 @@
                             <h3 class="masthead-brand">Hot Programmers</h3>
                             <ul class="nav masthead-nav">
                                 <li class="active"><a href="#">Home</a></li>
+                                <li><a href="c?a=<%= RequestHandlers.ADMIN_OVERVIEW.ordinal()%>">Admin</a></li>
                                 <li><a href="#">Questions</a></li>
                                 <li><a href="#">Login</a></li>
                             </ul>

@@ -1,3 +1,4 @@
+<%@page import="controller.handlers.RequestHandlers"%>
 <%@page import="domain.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -24,7 +25,7 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Admin</a></li>
+                        <li class="active"><a href="">Admin</a></li>
                         <li><a href="#">Questions</a></li>
                         <li><a href="#">Profile</a></li>
                         <li><a href="#">Help</a></li>
@@ -40,14 +41,14 @@
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
-                        <li class="active"><a href="#"><i class="fa fa-tachometer"></i> Overview</a></li>
-                        <li><a href="#">Reports</a></li>
-                        <li><a href="#"><i class="fa fa-line-chart"></i> Analytics</a></li>
-                        <li><a href="#">Export</a></li>
+                        <li class="active"><a href=""><i class="fa fa-tachometer"></i> Overview</a></li>
+                        <li><a href="c?a=<%= RequestHandlers.ADMIN_ANALYTICS.ordinal()%>"><i class="fa fa-line-chart"></i> Analytics</a></li>
+                        <li><a href="c?a=<%= RequestHandlers.ADMIN_SITELOG.ordinal()%>"><i class="fa fa-bug"></i> Sitelog</a></li>
+                        <li><a href="c?a=<%= RequestHandlers.ADMIN_SETTING.ordinal()%>"><i class="fa fa-sliders"></i> Settings</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">
-                        <li><a href=""><i class="fa fa-users"></i> Users</a></li>
-                        <li><a href="">Questions</a></li>
+                        <li><a href="c?a=<%= RequestHandlers.ADMIN_USERS.ordinal()%>"><i class="fa fa-users"></i> Users</a></li>
+                        <li><a href="c?a=<%= RequestHandlers.ADMIN_QUESTIONS.ordinal()%>"><i class="fa fa-question"></i><i class="fa fa-exclamation"></i> Questions</a></li>
                     </ul>
                     <!--ul class="nav nav-sidebar">
                         <li><a href="">Nav item again</a></li>
@@ -60,28 +61,40 @@
 
                     <div class="row placeholders">
                         <div class="col-xs-6 col-sm-3 placeholder">
-                            <img src="img/loading.gif" class="img-responsive" alt="">
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
+                            <a href="c?a=<%= RequestHandlers.ADMIN_QUESTIONS.ordinal()%>">
+                                <!--img src="img/loading.gif" class="img-responsive" alt=""-->
+                                <i class="fa fa-question fa-5x"></i><i class="fa fa-exclamation fa-5x"></i>
+                                <h4>Questions</h4>
+                                <span class="text-muted">Something else</span>
+                            </a>
                         </div>
                         <div class="col-xs-6 col-sm-3 placeholder">
-                            <img src="img/loading.gif" class="img-responsive" alt="">
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
+                            <a href="c?a=<%= RequestHandlers.ADMIN_USERS.ordinal()%>">
+                                <!--img src="img/loading.gif" class="img-responsive" alt=""-->
+                                <i class="fa fa-users fa-5x"></i>
+                                <h4>Users</h4>
+                                <span class="text-muted">Something else</span>
+                            </a>
                         </div>
                         <div class="col-xs-6 col-sm-3 placeholder">
-                            <img src="img/loading.gif" class="img-responsive" alt="">
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
+                            <a href="c?a=<%= RequestHandlers.ADMIN_ANALYTICS.ordinal()%>">
+                                <!--img src="img/loading.gif" class="img-responsive" alt=""-->
+                                <i class="fa fa-line-chart fa-5x"></i>
+                                <h4>Analytics</h4>
+                                <span class="text-muted">Something else</span>
+                            </a>
                         </div>
                         <div class="col-xs-6 col-sm-3 placeholder">
-                            <img src="img/loading.gif" class="img-responsive" alt="">
-                            <h4>Label</h4>
-                            <span class="text-muted">Something else</span>
+                            <a href="c?a=<%= RequestHandlers.ADMIN_SETTING.ordinal()%>">
+                                <!--img src="img/loading.gif" class="img-responsive" alt=""-->
+                                <i class="fa fa-sliders fa-5x"></i>
+                                <h4>Settings</h4>
+                                <span class="text-muted">Something else</span>
+                            </a>
                         </div>
                     </div>
 
-                    <h2 class="sub-header">Section title <i class="fa fa-refresh fa-spin"></i></h2>
+                    <h2 class="sub-header">Sitelog <i class="fa fa-refresh fa-spin"></i></h2>
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
@@ -170,41 +183,6 @@
                                     <td>Vestibulum</td>
                                     <td>lacinia</td>
                                     <td>arcu</td>
-                                </tr>
-                                <tr>
-                                    <td>1,011</td>
-                                    <td>eget</td>
-                                    <td>nulla</td>
-                                    <td>Class</td>
-                                    <td>aptent</td>
-                                </tr>
-                                <tr>
-                                    <td>1,012</td>
-                                    <td>taciti</td>
-                                    <td>sociosqu</td>
-                                    <td>ad</td>
-                                    <td>litora</td>
-                                </tr>
-                                <tr>
-                                    <td>1,013</td>
-                                    <td>torquent</td>
-                                    <td>per</td>
-                                    <td>conubia</td>
-                                    <td>nostra</td>
-                                </tr>
-                                <tr>
-                                    <td>1,014</td>
-                                    <td>per</td>
-                                    <td>inceptos</td>
-                                    <td>himenaeos</td>
-                                    <td>Curabitur</td>
-                                </tr>
-                                <tr>
-                                    <td>1,015</td>
-                                    <td>sodales</td>
-                                    <td>ligula</td>
-                                    <td>in</td>
-                                    <td>libero</td>
                                 </tr>
                             </tbody>
                         </table>
