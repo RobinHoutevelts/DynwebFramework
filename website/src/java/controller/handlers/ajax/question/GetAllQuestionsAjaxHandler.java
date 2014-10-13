@@ -1,12 +1,13 @@
-package controller.handlers.ajax;
+package controller.handlers.ajax.question;
 
+import controller.handlers.ajax.AjaxHandler;
 import database.Database;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ApproveQuestionAjaxHandler extends AjaxHandler {
+public class GetAllQuestionsAjaxHandler extends AjaxHandler {
 
-    public ApproveQuestionAjaxHandler(Database database) {
+    public GetAllQuestionsAjaxHandler(Database database) {
         super(database);
     }
 
