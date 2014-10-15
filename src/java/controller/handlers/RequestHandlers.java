@@ -5,7 +5,9 @@ public enum RequestHandlers {
     /**
      * If no specific request-handler-class is specified, use "RequestHandler" as default request-handler-class.
      */
-    HOME ("home.jsp", "RequestHandler"),
+    HOME        ("home.jsp", "RequestHandler"),
+    LOGIN       ("login.jsp", "RequestHandler"),
+    QUESTIONS   ("questions.jsp", "RequestHandler"),
     
     //Admin RequestHandlers
     ADMIN_OVERVIEW  ("adminOverview.jsp", "RequestHandler"),
