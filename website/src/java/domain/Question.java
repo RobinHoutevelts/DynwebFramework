@@ -1,18 +1,20 @@
 package domain;
 
-public class Question {
+public class Question implements Removable {
     
     private long id;
     private User user;
     private String text;
     private boolean approved;
     private boolean reviewed;
+    private boolean removed;
     
     public Question(User user, String text) {
         Question.this.setUser(user);
         Question.this.setText(text);
         this.approved = false;
         this.reviewed = false;
+        this.removed = false;
     }
     
     public User getUser() {
@@ -47,5 +49,15 @@ public class Question {
     
     public boolean isReviewed() {
         return this.reviewed;
+    }
+
+    @Override
+    public void remove() {
+        this.removed = true;
+    }
+
+    @Override
+    public boolean isRemoved() {
+        return this.removed;
     }
 }

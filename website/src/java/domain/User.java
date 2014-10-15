@@ -1,27 +1,39 @@
 package domain;
 
-public class User {
+public class User implements Removable {
     
-    private String username;
+    private String name;
     private String password;
+    private String email;
     private AccesLevel level;
+    private boolean removed;
     
-    public User(String username, String password) {
-        this(username, password, AccesLevel.USER);
+    public User(String email, String password, String name) {
+        this(email, password, name, AccesLevel.USER_CREATED);
     }
     
-    public User(String username, String password, AccesLevel level) {
-        User.this.setUsername(username);
+    public User(String email, String password, String name, AccesLevel level) {
+        this.removed = false;
+        User.this.setEmail(email);
         User.this.setPassword(password);
+        User.this.setName(name);
         User.this.setLevel(level);
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String username) {
+        this.email = username;
     }
 
     public String getPassword() {
@@ -41,6 +53,17 @@ public class User {
     }
     
     public boolean isAdmin() {return level.getLevel() >= 3;}
-    public boolean isUser() {return level.getLevel() >= 1;}
+    public boolean isActivated() {return level.getLevel() >= 1;}
+    public boolean isUser() {return level.getLevel() >= 0 && level.getLevel() <= 1;}
     public boolean isBlocked() {return level.getLevel() < 0;}
+
+    @Override
+    public void remove() {
+        this.removed = true;
+    }
+
+    @Override
+    public boolean isRemoved() {
+        return this.removed;
+    }
 }

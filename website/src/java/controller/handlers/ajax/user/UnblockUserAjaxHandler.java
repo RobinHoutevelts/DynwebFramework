@@ -5,9 +5,9 @@ import database.Database;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class UnblockUserAjaxHanxdler extends AjaxHandler {
+public class UnblockUserAjaxHandler extends AjaxHandler {
 
-    public UnblockUserAjaxHanxdler(Database database) {
+    public UnblockUserAjaxHandler(Database database) {
         super(database);
     }
 

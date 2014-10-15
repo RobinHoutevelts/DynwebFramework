@@ -19,8 +19,8 @@
                             <ul class="nav masthead-nav">
                                 <li class="active"><a href="#">Home</a></li>
                                 <li><a href="c?a=<%= RequestHandlers.ADMIN_OVERVIEW.ordinal()%>">Admin</a></li>
-                                <li><a href="#">Questions</a></li>
-                                <li><a href="#">Login</a></li>
+                                <li><a href="c?a=<%= RequestHandlers.QUESTIONS.ordinal()%>">Questions</a></li>
+                                <li><a href="c?a=<%= RequestHandlers.LOGIN.ordinal()%>">Login</a></li>
                             </ul>
                         </div>
                     </div>
