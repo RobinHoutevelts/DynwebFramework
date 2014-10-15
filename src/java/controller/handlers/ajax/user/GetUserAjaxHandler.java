@@ -1,14 +1,14 @@
 package controller.handlers.ajax.user;
 
 import controller.handlers.ajax.AjaxHandler;
-import database.Database;
+import service.WebService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class GetUserAjaxHandler extends AjaxHandler {
 
-    public GetUserAjaxHandler(Database database) {
-        super(database);
+    public GetUserAjaxHandler(WebService webService) {
+        super(webService);
     }
 
     @Override

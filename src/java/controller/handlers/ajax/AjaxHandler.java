@@ -1,11 +1,11 @@
 package controller.handlers.ajax;
 
 import controller.handlers.Handler;
-import database.Database;
+import service.WebService;
 
 public abstract class AjaxHandler extends Handler {
 
-    public AjaxHandler(Database database) {
-        super(database);
+    public AjaxHandler(WebService webService) {
+        super(webService);
     }
 }

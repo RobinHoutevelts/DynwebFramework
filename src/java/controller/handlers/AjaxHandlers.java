@@ -11,13 +11,13 @@ public enum AjaxHandlers {
     BLOCK_USER      ("user", "BlockUserAjaxHandler"),
     UNBLOCK_USER    ("user", "UnblockUserAjaxHandler"),
     MAKE_USER_ADMIN ("user", "MakeUserAdminAjaxHandler"),
-    DELETE_USER     ("user", "DeleteUserAjaxHandler"),
+    REMOVE_USER     ("user", "RemoveUserAjaxHandler"),
     
     GET_ALL_QUESTIONS           ("question", "GetAllQuestionsAjaxHandler"),
     GET_LATEST_QUESTIONID       ("question", "GetLatestQuestionId"),
     GET_DISAPPROVED_QUESTIONS   ("question", "GetDisapprovedQuestionsAjaxHandler"),
     GET_QUESTION                ("question", "GetQuestionAjaxHandler"),
-    DELETE_QUESTION             ("question", "DeleteQuestionAjaxHandler"),
+    REMOVE_QUESTION             ("question", "RemoveQuestionAjaxHandler"),
     APPROVE_QUESTION            ("question", "ApproveQuestionAjaxHandler"),
     DISAPPROVE_QUESTION         ("question", "DisapproveAjaxHandler");
     

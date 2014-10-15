@@ -1,8 +1,12 @@
 package domain;
 
-public class Question implements Removable {
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class Question extends Identifiable implements Removable {
     
-    private long id;
+    private static long idCounter = 0;
+    
     private User user;
     private String text;
     private boolean approved;
@@ -10,6 +14,14 @@ public class Question implements Removable {
     private boolean removed;
     
     public Question(User user, String text) {
+        Question.idCounter++;
+        
+        try {
+            this.setId(Question.idCounter);
+        } catch (DomainException exception) {
+            Logger.getLogger(Question.class.getName()).log(Level.SEVERE, exception.getMessage(), exception);
+        }
+        
         Question.this.setUser(user);
         Question.this.setText(text);
         this.approved = false;

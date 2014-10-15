@@ -1,14 +1,14 @@
-package controller.handlers.ajax.question;
+package controller.handlers.ajax.user;
 
 import controller.handlers.ajax.AjaxHandler;
-import database.Database;
+import service.WebService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class DeleteQuestionAjaxHandler extends AjaxHandler {
+public class RemoveUserAjaxHandler extends AjaxHandler {
 
-    public DeleteQuestionAjaxHandler(Database database) {
-        super(database);
+    public RemoveUserAjaxHandler(WebService webService) {
+        super(webService);
     }
 
     @Override

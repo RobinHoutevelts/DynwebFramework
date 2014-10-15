@@ -3,26 +3,26 @@ package controller;
 import controller.handlers.AjaxHandlerFactory;
 import controller.handlers.RequestHandlerFactory;
 
-import database.Database;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import service.WebService;
+
 public class ContextListener implements ServletContextListener {
     
-    private Database database;
+    private WebService webService;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        database = null;
+        webService = new WebService();
         ServletContext context = sce.getServletContext();
-        context.setAttribute("requestHandlerFactory", new RequestHandlerFactory(database));
-        context.setAttribute("ajaxHandlerFactory", new AjaxHandlerFactory(database));
+        context.setAttribute("requestHandlerFactory", new RequestHandlerFactory(webService));
+        context.setAttribute("ajaxHandlerFactory", new AjaxHandlerFactory(webService));
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        database.closeConnection();
+        webService.close();
     }
 }

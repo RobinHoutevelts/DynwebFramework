@@ -1,14 +1,14 @@
 package controller.handlers.ajax.question;
 
 import controller.handlers.ajax.AjaxHandler;
-import database.Database;
+import service.WebService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class GetDisapprovedQuestionsAjaxHandler extends AjaxHandler {
 
-    public GetDisapprovedQuestionsAjaxHandler(Database database) {
-        super(database);
+    public GetDisapprovedQuestionsAjaxHandler(WebService webService) {
+        super(webService);
     }
 
     @Override

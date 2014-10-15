@@ -1,16 +1,16 @@
 package controller.handlers;
 
-import database.Database;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.WebService;
+
 public abstract class Handler {
     
-    protected Database database;
+    protected WebService webService;
     
-    public Handler(Database database) {
-        this.database = database;
+    public Handler(WebService webService) {
+        this.webService = webService;
     }
     
     public abstract String execute(HttpServletRequest request, HttpServletResponse response);

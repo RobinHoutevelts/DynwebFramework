@@ -1,6 +1,11 @@
 package domain;
 
-public class User implements Removable {
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class User extends Identifiable implements Removable {
+    
+    private static long idCounter = 0;
     
     private String name;
     private String password;
@@ -13,11 +18,19 @@ public class User implements Removable {
     }
     
     public User(String email, String password, String name, AccesLevel level) {
-        this.removed = false;
+        User.idCounter++;
+        
+        try {
+            this.setId(User.idCounter);
+        } catch (DomainException exception) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, exception.getMessage(), exception);
+        }
+       
         User.this.setEmail(email);
         User.this.setPassword(password);
         User.this.setName(name);
         User.this.setLevel(level);
+        this.removed = false;
     }
 
     public String getName() {

@@ -1,7 +1,6 @@
 package controller.handlers;
 
 import controller.handlers.request.RequestHandler;
-import database.Database;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -9,11 +8,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import service.WebService;
+
 public class RequestHandlerFactory {
     
     private RequestHandler[] requestHandlers;
     
-    public RequestHandlerFactory(Database database) {
+    public RequestHandlerFactory(WebService webService) {
         
         requestHandlers = new RequestHandler[RequestHandlers.values().length];
         
@@ -23,8 +24,8 @@ public class RequestHandlerFactory {
             
             try {
                 Class requestHandlerClass = Class.forName(rh.getRequestHandlerClass());
-                Constructor constructorClass = requestHandlerClass.getConstructor(Database.class, String.class);
-                requestHandler = (RequestHandler) constructorClass.newInstance(database, rh.getView());
+                Constructor constructorClass = requestHandlerClass.getConstructor(WebService.class, String.class);
+                requestHandler = (RequestHandler) constructorClass.newInstance(webService, rh.getView());
             }
             catch (ClassNotFoundException   | // Thrown by 'Class.forName(String)' if the class cannot be located.
                    NoSuchMethodException    | // Thrown by 'Class.getConstructor(paraps...)' if a matching method is not found.
