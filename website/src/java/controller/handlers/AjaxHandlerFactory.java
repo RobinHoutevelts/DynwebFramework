@@ -1,7 +1,6 @@
 package controller.handlers;
 
 import controller.handlers.ajax.AjaxHandler;
-import database.Database;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -9,11 +8,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import service.WebService;
+
 public class AjaxHandlerFactory {
     
     private AjaxHandler[] ajaxHandlers;
     
-    public AjaxHandlerFactory(Database database) {
+    public AjaxHandlerFactory(WebService webService) {
         
         ajaxHandlers = new AjaxHandler[AjaxHandlers.values().length];
         
@@ -23,8 +24,8 @@ public class AjaxHandlerFactory {
             
             try {
                 Class ajaxHandlerClass = Class.forName(ah.getAjaxHandlerClass());
-                Constructor constructorClass = ajaxHandlerClass.getConstructor(Database.class);
-                ajaxHandler = (AjaxHandler) constructorClass.newInstance(database);
+                Constructor constructorClass = ajaxHandlerClass.getConstructor(WebService.class);
+                ajaxHandler = (AjaxHandler) constructorClass.newInstance(webService);
             }
             catch (ClassNotFoundException   | // Thrown by 'Class.forName(String)' if the class cannot be located.
                    NoSuchMethodException    | // Thrown by 'Class.getConstructor(paraps...)' if a matching method is not found.

@@ -1,18 +1,25 @@
 package controller.handlers.ajax.user;
 
 import controller.handlers.ajax.AjaxHandler;
-import database.Database;
+import service.WebService;
+import domain.User;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class BlockUserAjaxHandler extends AjaxHandler{
 
-    public BlockUserAjaxHandler(Database database) {
-        super(database);
+    public BlockUserAjaxHandler(WebService webService) {
+        super(webService);
     }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        User user = (User) request.getSession(true).getAttribute("user");
+        if (user != null && user.isAdmin()) {
+            
+            return "";
+        } else {
+            return "You must be logged in as admin to block users.";
+        }
     }
 }

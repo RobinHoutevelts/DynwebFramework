@@ -1,7 +1,7 @@
 package controller.handlers.request;
 
 import controller.handlers.Handler;
-import database.Database;
+import service.WebService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,8 +10,8 @@ public class RequestHandler extends Handler {
     
     private String view;
     
-    public RequestHandler(Database database, String view) {
-        super(database);
+    public RequestHandler(WebService webService, String view) {
+        super(webService);
         this.view = view;
     }
     
