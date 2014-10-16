@@ -4,6 +4,7 @@ import database.QuestionDatabase;
 import database.UserDatabase;
 import domain.Question;
 import domain.User;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class WebService {
@@ -60,7 +61,7 @@ public class WebService {
     }
     
     public Collection<User> getAllUsers() {
-        return null;
+        return new ArrayList<>();
     }
     
     public void close() {
