@@ -3,6 +3,7 @@ package controller;
 import controller.handlers.AjaxHandlerFactory;
 import controller.handlers.Handler;
 import controller.handlers.RequestHandlerFactory;
+import controller.handlers.ajax.AjaxHandler;
 
 import java.io.IOException;
 import java.util.logging.Level;

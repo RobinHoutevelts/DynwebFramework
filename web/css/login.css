@@ -41,3 +41,17 @@ body {
 .margin-bottom-sm {
 margin-bottom: 5px !important;
 }
+
+.registerLabel {
+    margin-top: 12px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+#loginError {
+    color: #a94442;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    margin-top: 8px;
+}

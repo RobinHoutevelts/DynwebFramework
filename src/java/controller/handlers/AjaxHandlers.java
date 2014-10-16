@@ -6,6 +6,9 @@ public enum AjaxHandlers {
      * Ajax-calls must always be handled. Therefor there isn't a default ajax-handler-class as for the normal request.
      * AjaxHandler is an abstract class, so don't use is as a default handler! Always specify a new handler class for a new ajax-requesttype.
      */
+    LOGIN       ("", "LoginAjaxHandler"),
+    REGISTER    ("", "RegisterAjaxHandler"),
+    
     GET_ALL_USERS   ("user", "GetAllUsersAjaxHandler"),
     GET_USER        ("user", "GetUserAjaxHandler"),
     BLOCK_USER      ("user", "BlockUserAjaxHandler"),
@@ -14,12 +17,12 @@ public enum AjaxHandlers {
     REMOVE_USER     ("user", "RemoveUserAjaxHandler"),
     
     GET_ALL_QUESTIONS           ("question", "GetAllQuestionsAjaxHandler"),
-    GET_LATEST_QUESTIONID       ("question", "GetLatestQuestionId"),
+    GET_LATEST_QUESTIONID       ("question", "GetLatestQuestionid"),
     GET_DISAPPROVED_QUESTIONS   ("question", "GetDisapprovedQuestionsAjaxHandler"),
     GET_QUESTION                ("question", "GetQuestionAjaxHandler"),
     REMOVE_QUESTION             ("question", "RemoveQuestionAjaxHandler"),
     APPROVE_QUESTION            ("question", "ApproveQuestionAjaxHandler"),
-    DISAPPROVE_QUESTION         ("question", "DisapproveAjaxHandler");
+    DISAPPROVE_QUESTION         ("question", "DisapproveQuestionAjaxHandler");
     
     private final String ajaxHandlerClass;
     private final String packageName;
@@ -30,6 +33,7 @@ public enum AjaxHandlers {
     }
         
     public String getAjaxHandlerClass() {
-        return "controller.handlers.ajax." + packageName + "." + this.ajaxHandlerClass;
+        if (packageName.equals("")) return "controller.handlers.ajax." + this.ajaxHandlerClass;
+        else return "controller.handlers.ajax." + packageName + "." + this.ajaxHandlerClass;
     }
 }
