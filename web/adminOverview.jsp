@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Admin Panel - Overview</title>
         
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
@@ -65,7 +65,9 @@
                                 <!--img src="img/loading.gif" class="img-responsive" alt=""-->
                                 <i class="fa fa-question fa-5x"></i><i class="fa fa-exclamation fa-5x"></i>
                                 <h4>Questions</h4>
-                                <span class="text-muted">Something else</span>
+                                <span class="text-muted">Unreviewed: 3</span><br>
+                                <span class="text-muted">Approved: 76</span><br>
+                                <span class="text-muted">Disapproved: 29</span>
                             </a>
                         </div>
                         <div class="col-xs-6 col-sm-3 placeholder">
@@ -73,7 +75,9 @@
                                 <!--img src="img/loading.gif" class="img-responsive" alt=""-->
                                 <i class="fa fa-users fa-5x"></i>
                                 <h4>Users</h4>
-                                <span class="text-muted">Something else</span>
+                                <span class="text-muted">Admins: 8</span><br>
+                                <span class="text-muted">Users: 138</span><br>
+                                <span class="text-muted">Blocked: 5</span>
                             </a>
                         </div>
                         <div class="col-xs-6 col-sm-3 placeholder">
@@ -95,7 +99,7 @@
                     </div>
 
                     <h2 class="sub-header">Sitelog <i class="fa fa-refresh fa-spin"></i></h2>
-                    <div class="table-responsive">
+                    <!--div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -186,9 +190,11 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div-->
                 </div>
             </div>
         </div>
     </body>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </html>

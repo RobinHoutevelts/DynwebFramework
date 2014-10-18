@@ -1,27 +1,25 @@
 package domain;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-public class Question extends Identifiable implements Removable {
-    
-    private static long idCounter = 0;
-    
+@Entity
+@Table(name="Questions")
+public class Question extends Identifiable implements Removable, Serializable {
+
     private User user;
     private String text;
     private boolean approved;
     private boolean reviewed;
     private boolean removed;
     
+    protected Question() {
+        this(null, null);
+    }
+    
     public Question(User user, String text) {
-        Question.idCounter++;
-        
-        try {
-            this.setId(Question.idCounter);
-        } catch (DomainException exception) {
-            Logger.getLogger(Question.class.getName()).log(Level.SEVERE, exception.getMessage(), exception);
-        }
-        
+        super();
         Question.this.setUser(user);
         Question.this.setText(text);
         this.approved = false;
