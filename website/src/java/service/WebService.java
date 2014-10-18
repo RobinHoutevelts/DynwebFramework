@@ -1,70 +1,76 @@
 package service;
 
+import database.DatabaseException;
+import database.JDBCQuestionDatabase;
+import database.JDBCUserDatabase;
 import database.QuestionDatabase;
 import database.UserDatabase;
 import domain.Question;
 import domain.User;
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class WebService {
     
-    private QuestionDatabase questionDatabase;
-    private UserDatabase userDatabase;
+    private final QuestionDatabase questionDatabase;
+    private final UserDatabase userDatabase;
     
     public WebService() {
-        //TODO
+        questionDatabase = JDBCQuestionDatabase.getInstance();
+        userDatabase = JDBCUserDatabase.getInstance();
     }
     
-    public boolean addQuestion(Question question) throws ServiceException {
-        return false;
+    public boolean addQuestion(Question question) throws DatabaseException {
+        return questionDatabase.add(question);
     }
     
-    public boolean updateQuestion(Question question) throws ServiceException {
-        return false;
+    public boolean updateQuestion(Question question) throws DatabaseException {
+        return questionDatabase.update(question);
     }
     
-    public boolean removeQuestion(Question question) throws ServiceException {
-        return false;
+    public boolean removeQuestion(Question question) throws DatabaseException {
+        return questionDatabase.remove(question);
     }
     
-    public boolean removeQuestion(long id) throws ServiceException {
-        return false;
+    public boolean removeQuestion(long id) throws DatabaseException {
+        Question removeQuestion = questionDatabase.get(id);
+        return this.removeQuestion(removeQuestion);
     }
     
-    public User getQuestion(long id) throws ServiceException {
-        return null;
+    public Question getQuestion(long id) throws DatabaseException {
+        return questionDatabase.get(id);
     }
     
     public Collection<Question> getAllQuestions() {
-        return null;
+        return questionDatabase.getAll();
     }
     
-    public boolean addUser(User user) throws ServiceException {
-        return false;
+    public boolean addUser(User user) throws DatabaseException {
+        return userDatabase.add(user);
     }
     
-    public boolean updateUser(User user) throws ServiceException {
-        return false;
+    public boolean updateUser(User user) throws DatabaseException {
+        return userDatabase.update(user);
     }
     
-    public boolean removeUser(User user) throws ServiceException {
-        return false;
+    public boolean removeUser(User user) throws DatabaseException {
+        return userDatabase.remove(user);
     }
     
-    public boolean removeUser(long id) throws ServiceException {
-        return false;
+    public boolean removeUser(long id) throws DatabaseException {
+        User removeUser = userDatabase.get(id);
+        return this.removeUser(removeUser);
     }
     
-    public User getUser(long id) throws ServiceException {
-        return null;
+    public User getUser(long id) throws DatabaseException {
+        return userDatabase.get(id);
     }
     
     public Collection<User> getAllUsers() {
-        return new ArrayList<>();
+        return userDatabase.getAll();
     }
     
-    public void close() {
-        //TODO
+    public void close() throws ServiceException {
+        questionDatabase.closeConnection();
+        userDatabase.closeConnection();
     }
 }

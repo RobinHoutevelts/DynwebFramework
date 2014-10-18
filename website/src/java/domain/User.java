@@ -1,35 +1,34 @@
 package domain;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.Serializable;
 
-public class User extends Identifiable implements Removable {
-    
-    private static long idCounter = 0;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Users")
+public class User extends Identifiable implements Removable, Serializable {
     
     private String name;
     private String password;
     private String email;
-    private AccesLevel level;
+    private AccesLevel accesLevel;
     private boolean removed;
+    
+    protected User() {
+        this(null, null, null);
+    }
     
     public User(String email, String password, String name) {
         this(email, password, name, AccesLevel.USER_CREATED);
     }
     
     public User(String email, String password, String name, AccesLevel level) {
-        User.idCounter++;
-        
-        try {
-            this.setId(User.idCounter);
-        } catch (DomainException exception) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, exception.getMessage(), exception);
-        }
-       
+        super();
         User.this.setEmail(email);
         User.this.setPassword(password);
         User.this.setName(name);
-        User.this.setLevel(level);
+        User.this.setAccesLevel(level);
         this.removed = false;
     }
 
@@ -58,17 +57,17 @@ public class User extends Identifiable implements Removable {
     }
 
     public AccesLevel getLevel() {
-        return level;
+        return this.accesLevel;
     }
 
-    public void setLevel(AccesLevel level) {
-        this.level = level;
+    public void setAccesLevel(AccesLevel level) {
+        this.accesLevel = level;
     }
     
-    public boolean isAdmin() {return level.getLevel() >= 3;}
-    public boolean isActivated() {return level.getLevel() >= 1;}
-    public boolean isUser() {return level.getLevel() >= 0 && level.getLevel() <= 1;}
-    public boolean isBlocked() {return level.getLevel() < 0;}
+    public boolean isAdmin() {return accesLevel.getLevel() >= 3;}
+    public boolean isActivated() {return accesLevel.getLevel() >= 1;}
+    public boolean isUser() {return accesLevel.getLevel() >= 0 && accesLevel.getLevel() <= 1;}
+    public boolean isBlocked() {return accesLevel.getLevel() < 0;}
 
     @Override
     public void remove() {

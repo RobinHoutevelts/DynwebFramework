@@ -15,14 +15,16 @@ public enum AjaxHandlers {
     UNBLOCK_USER    ("user", "UnblockUserAjaxHandler"),
     MAKE_USER_ADMIN ("user", "MakeUserAdminAjaxHandler"),
     REMOVE_USER     ("user", "RemoveUserAjaxHandler"),
+    GET_USERS_INFO  ("user", "GetUsersInfoAjaxHandler"),
     
     GET_ALL_QUESTIONS           ("question", "GetAllQuestionsAjaxHandler"),
-    GET_LATEST_QUESTIONID       ("question", "GetLatestQuestionid"),
+    GET_LATEST_QUESTIONID       ("question", "GetLatestQuestionidAjaxHandler"),
     GET_DISAPPROVED_QUESTIONS   ("question", "GetDisapprovedQuestionsAjaxHandler"),
     GET_QUESTION                ("question", "GetQuestionAjaxHandler"),
     REMOVE_QUESTION             ("question", "RemoveQuestionAjaxHandler"),
     APPROVE_QUESTION            ("question", "ApproveQuestionAjaxHandler"),
-    DISAPPROVE_QUESTION         ("question", "DisapproveQuestionAjaxHandler");
+    DISAPPROVE_QUESTION         ("question", "DisapproveQuestionAjaxHandler"),
+    GET_QUESTIONS_INFO          ("question", "GetQuestionsInfoAjaxHandler");
     
     private final String ajaxHandlerClass;
     private final String packageName;

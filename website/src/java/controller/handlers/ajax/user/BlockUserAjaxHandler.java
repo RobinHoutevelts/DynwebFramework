@@ -1,15 +1,16 @@
 package controller.handlers.ajax.user;
 
 import controller.handlers.ajax.AjaxHandler;
-import domain.AccesLevel;
+
+import database.DatabaseException;
 
 import service.WebService;
 
 import domain.User;
+import domain.AccesLevel;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.ServiceException;
 
 public class BlockUserAjaxHandler extends AjaxHandler {
 
@@ -32,12 +33,12 @@ public class BlockUserAjaxHandler extends AjaxHandler {
                     } else if (blocked.isBlocked()) {
                         return "The user is already blocked.";
                     } else {
-                        blocked.setLevel(AccesLevel.BLOCKED);
-                        return "";
+                        blocked.setAccesLevel(AccesLevel.BLOCKED);
+                        return ""; //Succes
                     }
                 } catch (NumberFormatException exception) {
                     return "Parameter 'uid' must be of type long.";
-                } catch (ServiceException exception) {
+                } catch (DatabaseException exception) {
                     return exception.getMessage();
                 }
             }

@@ -1,7 +1,14 @@
 package domain;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public abstract class Identifiable {
 
+    @Id
+    @GeneratedValue
     protected long id;
     
     public Identifiable() {
