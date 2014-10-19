@@ -2,6 +2,7 @@ package controller.handlers.ajax.user;
 
 import controller.handlers.ajax.AjaxHandler;
 import domain.Identifiable;
+import database.UserDatabase;
 import domain.User;
 import java.io.IOException;
 import java.util.Collection;
@@ -13,8 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 public class GetAllUsersAjaxHandler extends AjaxHandler {
 
+    private UserDatabase userDatabase;
     public GetAllUsersAjaxHandler(WebService webService) {
         super(webService);
+        this.userDatabase = webService.getUserDatabase();
     }
 
     @Override
@@ -24,7 +27,7 @@ public class GetAllUsersAjaxHandler extends AjaxHandler {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             stringBuilder.append("<users>");
-            for (User u : webService.getAllUsers()) {
+            for (User u : this.userDatabase.getAll()) {
                 if (u.isRemoved()) continue;
                 stringBuilder.append("<user>");
                 stringBuilder.append("<id>").append(u.getId()).append("</id>");

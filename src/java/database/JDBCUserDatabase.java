@@ -2,26 +2,43 @@ package database;
 
 import domain.User;
 import java.util.Collection;
+import java.util.HashMap;
+import java.sql.SQLException;
 
 public class JDBCUserDatabase implements UserDatabase {
     
-    private static JDBCUserDatabase instance;
+    protected Database db;
     
-    private JDBCUserDatabase() {
+    private JDBCUserDatabase(Database database) {
         //TODO
+        this.db = database;
     }
-    
-    @SuppressWarnings("DoubleCheckedLocking")
-    public static JDBCUserDatabase getInstance() {
-        if (instance == null) synchronized (JDBCUserDatabase.class) {
-            if (instance == null) instance = new JDBCUserDatabase();
-        }
-        return instance;
-    }
-
     @Override
     public boolean add(User user) throws DatabaseException {
+      String sql = "INSERT INTO Users (name,email,removed,password,level)"
+          + "VALUES(:name ,:email ,:removed ,:password ,:level )";
+
+      int id = 0;
+      NamedParamStatement stmt;
+      try {
+        stmt = this.db.namedParamStatement(sql);
+
+        stmt.setString("name", user.getName());
+        stmt.setString("email", user.getEmail());
+        stmt.setBoolean("removed", user.isRemoved());
+        stmt.setString("password", user.getPassword());
+        stmt.setInt("level", user.getLevel().ordinal());
+        
+        id = stmt.executeUpdate();
+      } catch (SQLException e) {
+        throw new DatabaseException(e);
+      }
+
+      if (id > 0){
+        return true;
+      }else{
         return false;
+      }
     }
 
     @Override

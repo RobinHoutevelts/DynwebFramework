@@ -1,10 +1,12 @@
 package controller;
 
+import conf.Config;
 import controller.handlers.AjaxHandlerFactory;
 import controller.handlers.RequestHandlerFactory;
 
 import database.DatabaseException;
 
+import database.UserDatabase;
 import domain.AccesLevel;
 import domain.User;
 
@@ -24,6 +26,8 @@ public class ContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+    	// Laad configuratiebestand
+        Config.load();
         webService = new WebService();
         ServletContext context = sce.getServletContext();
         context.setAttribute("requestHandlerFactory", new RequestHandlerFactory(webService));
@@ -37,16 +41,17 @@ public class ContextListener implements ServletContextListener {
         User adminRobinWoodfields = new User("robin.woodfields@student.khleuven.be", "passwordHash", "Robin Woodfields", AccesLevel.ADMIN);
         User adminMatthiasDesard = new User("matthias.jan.desard@student.khleuven.be", "passwordHash", "Matthias Desard", AccesLevel.ADMIN);
         User adminBartVanLooveren = new User("bart.van.looveren@student.khleuven.be", "passwordHash", "Bart van Looveren", AccesLevel.ADMIN);
+        UserDatabase userDatabase = this.webService.getUserDatabase();
         
         try {
-            this.webService.addUser(adminTimLenaers);
-            this.webService.addUser(adminFeryVousure);
-            this.webService.addUser(adminKevinPeeters);
-            this.webService.addUser(adminRubenMoermans);
-            this.webService.addUser(adminJasperDeValck);
-            this.webService.addUser(adminRobinWoodfields);
-            this.webService.addUser(adminMatthiasDesard);
-            this.webService.addUser(adminBartVanLooveren);
+            userDatabase.add(adminTimLenaers);
+            userDatabase.add(adminFeryVousure);
+            userDatabase.add(adminKevinPeeters);
+            userDatabase.add(adminRubenMoermans);
+            userDatabase.add(adminJasperDeValck);
+            userDatabase.add(adminRobinWoodfields);
+            userDatabase.add(adminMatthiasDesard);
+            userDatabase.add(adminBartVanLooveren);
         } catch (DatabaseException exception) {
             Logger.getLogger(ContextListener.class.getName()).log(Level.SEVERE, exception.getMessage(), exception);
         }

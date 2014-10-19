@@ -1,10 +1,9 @@
 package controller.handlers.ajax.question;
 
 import controller.handlers.ajax.AjaxHandler;
-
+import database.QuestionDatabase;
 import domain.Question;
 import domain.User;
-
 import service.WebService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 public class GetAllQuestionsAjaxHandler extends AjaxHandler {
 
+    private QuestionDatabase questionDatabase;
     public GetAllQuestionsAjaxHandler(WebService webService) {
         super(webService);
+        this.questionDatabase = webService.getQuestionDatabase();
     }
 
     @Override
@@ -22,7 +23,7 @@ public class GetAllQuestionsAjaxHandler extends AjaxHandler {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         stringBuilder.append("<questions>");
-        for (Question q : webService.getAllQuestions()) {
+        for (Question q : this.questionDatabase.getAll()) {
             if (q.isRemoved()) continue;
             stringBuilder.append("<question>");
             stringBuilder.append("<id>").append(q.getId()).append("</id>");

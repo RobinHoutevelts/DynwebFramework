@@ -1,5 +1,6 @@
 package controller.handlers.ajax;
 
+import database.UserDatabase;
 import domain.User;
 
 import java.util.Collection;
@@ -12,8 +13,10 @@ import service.WebService;
 
 public class LoginAjaxHandler extends AjaxHandler {
 
+    private UserDatabase userDatabase;
     public LoginAjaxHandler(WebService webService) {
         super(webService);
+        this.userDatabase = webService.getUserDatabase();
     }
 
     @Override
@@ -21,7 +24,7 @@ public class LoginAjaxHandler extends AjaxHandler {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String message = "User is not found.";
-        for (User u : webService.getAllUsers()) {
+        for (User u : this.userDatabase.getAll()) {
             if (u.isRemoved()) continue;
             if (u.getEmail().equals(email)) {
                 message = "Password is not correct.";
