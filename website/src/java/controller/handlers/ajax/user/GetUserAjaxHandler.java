@@ -2,15 +2,18 @@ package controller.handlers.ajax.user;
 
 import controller.handlers.ajax.AjaxHandler;
 import database.DatabaseException;
+import database.UserDatabase;
 import domain.User;
 import service.WebService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class GetUserAjaxHandler extends AjaxHandler {
-
+    protected UserDatabase userDatabase;
+    
     public GetUserAjaxHandler(WebService webService) {
         super(webService);
+        this.userDatabase = webService.getUserDatabase();
     }
 
     @Override
@@ -22,7 +25,7 @@ public class GetUserAjaxHandler extends AjaxHandler {
             } else {
                 try {
                     long id = Long.parseLong(request.getParameter("uid"));
-                    User requestedUser = webService.getUser(id);
+                    User requestedUser = this.userDatabase.get(id);
                     if (requestedUser.isRemoved()) {
                         return "There is no user for the given 'uid'.";
                     } else {

@@ -3,6 +3,7 @@ package controller.handlers.ajax.user;
 import controller.handlers.ajax.AjaxHandler;
 
 import database.DatabaseException;
+import database.UserDatabase;
 
 import service.WebService;
 
@@ -14,8 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 
 public class BlockUserAjaxHandler extends AjaxHandler {
 
+    private UserDatabase userDatabase;
+    
     public BlockUserAjaxHandler(WebService webService) {
         super(webService);
+        this.userDatabase = webService.getUserDatabase();
     }
 
     @Override

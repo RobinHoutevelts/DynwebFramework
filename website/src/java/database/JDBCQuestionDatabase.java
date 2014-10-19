@@ -4,21 +4,12 @@ import domain.Question;
 import java.util.Collection;
 
 public class JDBCQuestionDatabase implements QuestionDatabase {
-    
-    private static JDBCQuestionDatabase instance;
-    
-    private JDBCQuestionDatabase() {
+    protected Database database;
+    private JDBCQuestionDatabase(Database database) {
         //TODO
+        this.database = database;
     }
     
-    @SuppressWarnings("DoubleCheckedLocking")
-    public static JDBCQuestionDatabase getInstance() {
-        if (instance == null) synchronized (JDBCQuestionDatabase.class) {
-            if (instance == null) instance = new JDBCQuestionDatabase();
-        }
-        return instance;
-    }
-
     @Override
     public boolean add(Question question) throws DatabaseException {
         return false;
