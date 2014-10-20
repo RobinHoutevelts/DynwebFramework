@@ -5,11 +5,8 @@ import domain.DomainException;
 import domain.User;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import org.apache.coyote.ActionCode;
 
 public class JDBCUserDatabase implements UserDatabase {
 

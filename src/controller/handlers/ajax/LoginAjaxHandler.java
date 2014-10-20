@@ -4,8 +4,6 @@ import database.DatabaseException;
 import database.UserDatabase;
 import domain.User;
 
-import java.util.Collection;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
