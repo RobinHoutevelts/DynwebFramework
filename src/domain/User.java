@@ -10,7 +10,6 @@ import javax.persistence.Table;
 public class User extends Identifiable implements Removable, Serializable {
 
     private String name;
-    private String password;
     private String email;
     private AccesLevel accesLevel;
     private boolean removed;
@@ -18,15 +17,20 @@ public class User extends Identifiable implements Removable, Serializable {
     protected User() {
         this(null, null, null);
     }
-
-    public User(String email, String password, String name) {
-        this(email, password, name, AccesLevel.USER_CREATED);
+    
+    public User(long id,String name,String email, AccesLevel level) throws DomainException
+    {
+        this(email, name, level);
+        this.setId(id);
     }
 
-    public User(String email, String password, String name, AccesLevel level) {
+    public User(String email, String name) {
+        this(email, name, AccesLevel.USER_CREATED);
+    }
+
+    public User(String email, String name, AccesLevel level) {
         super();
         User.this.setEmail(email);
-        User.this.setPassword(password);
         User.this.setName(name);
         User.this.setAccesLevel(level);
         this.removed = false;
@@ -46,14 +50,6 @@ public class User extends Identifiable implements Removable, Serializable {
 
     public void setEmail(String username) {
         this.email = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public AccesLevel getLevel() {
