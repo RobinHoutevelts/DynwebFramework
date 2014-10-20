@@ -1,9 +1,15 @@
 package database;
 
+import domain.AccesLevel;
+import domain.DomainException;
 import domain.User;
+
 import java.util.Collection;
 import java.util.HashMap;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.apache.coyote.ActionCode;
 
 public class JDBCUserDatabase implements UserDatabase {
 
@@ -13,31 +19,43 @@ public class JDBCUserDatabase implements UserDatabase {
         //TODO
         this.db = database;
     }
+    
     @Override
-    public boolean add(User user) throws DatabaseException {
+    public User add(String name,String email, String password, AccesLevel level) throws DatabaseException {
+        User user = null;
+        
         String sql = "INSERT INTO Users (name,email,removed,password,level)"
                 + "VALUES(:name ,:email,:removed,:password,:level)";
-        int id = 0;
-        NamedParamStatement stmt;
+        
+        int rowsAffected = 0;
         try {
-            stmt = this.db.namedParamStatement(sql);
+            // Prepared Statement maken
+            NamedParamStatement stmt = this.db.namedParamStatement(sql);
 
-            stmt.setString("name", user.getName());
-            stmt.setString("email", user.getEmail());
-            stmt.setBoolean("removed", user.isRemoved());
-            stmt.setString("password", user.getPassword());
-            stmt.setInt("level", user.getLevel().ordinal());
+            // Prepared Statement vullen
+            stmt.setString("name", name);
+            stmt.setString("email", email);
+            stmt.setBoolean("removed", false);
+            stmt.setString("password", password);
+            stmt.setInt("level", level.ordinal());
 
-            id = stmt.executeUpdate();
+            // Prepared Statement uitvoeren
+            rowsAffected = stmt.executeUpdate();
+            stmt.close();
         } catch (SQLException e) {
             throw new DatabaseException(e);
         }
-
-        if (id > 0){
-            return true;
+        
+        if(rowsAffected < 0) {
+            // Failed to insert!
+            // TODO: Error handling
+            throw new DatabaseException("Kon gebruiker niet toevoegen.");
         }else{
-            return false;
+            // Zonet gemaakte gebruiker ophalen vanuit DB
+            user = this.getByEmail(email);
         }
+        
+        return user;
     }
 
     @Override
@@ -53,6 +71,93 @@ public class JDBCUserDatabase implements UserDatabase {
     @Override
     public User get(long id) throws DatabaseException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public User getByEmail(String email) throws DatabaseException
+    {
+        User user = null;
+        
+        String sql = "SELECT id,name,email,removed,password,level FROM Users "
+                + "WHERE email = :email";
+        
+        try{
+            // Prepared Statement maken
+            NamedParamStatement stmt = this.db.namedParamStatement(sql);
+            
+            // Prepared Statement vullen
+            stmt.setString("email", email);
+            
+            // Prepared Statement uitvoeren
+            ResultSet res = stmt.executeQuery();
+            
+            // Gegevens ophalen
+            DatabaseRow row = this.db.getRow(res);
+            
+            stmt.close();
+            
+            if (row == null) {
+                throw new DatabaseException("Kon gebruiker met email '"+email+"' niet vinden.");
+            }else{
+                // Gebruikerobject aanmaken
+                
+                long id = row.getLong("id");
+                email = row.getString("email");
+                String name = row.getString("name");
+                
+                AccesLevel level = AccesLevel.values()[row.getInt("level")];
+   
+                user = new User(id,email,name,level);
+            }
+            
+        }catch(SQLException|DomainException e){
+            throw new DatabaseException(e);
+        }
+        
+        return user;
+    }
+    
+    public User getByCredentials(String email,String password) throws DatabaseException
+    {
+        User user = null;
+        String sql = "SELECT id,name,email,removed,password,level FROM Users "
+                + "WHERE email = :email "
+                + "AND   password = :password";
+        
+        try{
+            // Prepared Statement maken
+            NamedParamStatement stmt = this.db.namedParamStatement(sql);
+            
+            // Prepared Statement vullen
+            stmt.setString("email", email);
+            stmt.setString("password", password);
+            
+            // Prepared Statement uitvoeren
+            ResultSet res = stmt.executeQuery();
+            
+            // Gegevens ophalen
+            DatabaseRow row = this.db.getRow(res);
+            
+            stmt.close();
+            
+            if (row == null) {
+                throw new DatabaseException("Kon gebruiker met email '"+email+"' en dat wachtwoord niet vinden.");
+            }else{
+                // Gebruikerobject aanmaken
+                
+                long id = row.getLong("id");
+                email = row.getString("email");
+                String name = row.getString("name");
+                
+                AccesLevel level = AccesLevel.values()[row.getInt("level")];
+   
+                user = new User(id,email,name,level);
+            }
+            
+        }catch(SQLException|DomainException e){
+            throw new DatabaseException(e);
+        }
+        
+        return user;
     }
 
     @Override

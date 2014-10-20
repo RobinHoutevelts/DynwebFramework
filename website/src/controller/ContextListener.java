@@ -33,25 +33,18 @@ public class ContextListener implements ServletContextListener {
         context.setAttribute("requestHandlerFactory", new RequestHandlerFactory(webService));
         context.setAttribute("ajaxHandlerFactory", new AjaxHandlerFactory(webService));
 
-        User adminTimLenaers = new User("tim.lenaers@student.khleuven.be", "passwordHash", "Tim Lenaers", AccesLevel.ADMIN);
-        User adminFeryVousure = new User("fery.vousure@student.khleuven.be", "passwordHash", "Fery Vousure", AccesLevel.ADMIN);
-        User adminKevinPeeters = new User("kevin.peeters3@student.khleuven.be", "passwordHash", "Kevin Peeters", AccesLevel.ADMIN);
-        User adminRubenMoermans = new User("ruben.moermans@student.khleuven.be", "passwordHash", "Ruben Moermans", AccesLevel.ADMIN);
-        User adminJasperDeValck = new User("jasper.de.valck@student.khleuven.be", "passwordHash", "Jasper De Valck", AccesLevel.ADMIN);
-        User adminRobinWoodfields = new User("robin.woodfields@student.khleuven.be", "passwordHash", "Robin Woodfields", AccesLevel.ADMIN);
-        User adminMatthiasDesard = new User("matthias.jan.desard@student.khleuven.be", "passwordHash", "Matthias Desard", AccesLevel.ADMIN);
-        User adminBartVanLooveren = new User("bart.van.looveren@student.khleuven.be", "passwordHash", "Bart van Looveren", AccesLevel.ADMIN);
         UserDatabase userDatabase = this.webService.getUserDatabase();
-
+   
         try {
-            userDatabase.add(adminTimLenaers);
-            userDatabase.add(adminFeryVousure);
-            userDatabase.add(adminKevinPeeters);
-            userDatabase.add(adminRubenMoermans);
-            userDatabase.add(adminJasperDeValck);
-            userDatabase.add(adminRobinWoodfields);
-            userDatabase.add(adminMatthiasDesard);
-            userDatabase.add(adminBartVanLooveren);
+            User adminTimLenaers = userDatabase.add("Tim Lenaers", "tim.lenaers@student.khleuven.be", "passwordHash", AccesLevel.ADMIN);
+            User adminFeryVousure = userDatabase.add("Fery Vousure", "fery.vousure@student.khleuven.be", "passwordHash", AccesLevel.ADMIN);
+            User adminKevinPeeters = userDatabase.add("Kevin Peeters", "kevin.peeters3@student.khleuven.be", "passwordHash", AccesLevel.ADMIN);
+            User adminRubenMoermans = userDatabase.add("Ruben Moermans", "ruben.moermans@student.khleuven.be", "passwordHash", AccesLevel.ADMIN);
+            User adminJasperDeValck = userDatabase.add("Jasper De Valck", "jasper.de.valck@student.khleuven.be", "passwordHash", AccesLevel.ADMIN);
+            User adminRobinWoodfields = userDatabase.add("Robin Houtevelts", "robin.houtevelts@student.khleuven.be", "passwordHash", AccesLevel.ADMIN);
+            User adminMatthiasDesard = userDatabase.add("Matthias Desard", "matthias.jan.desard@student.khleuven.be", "passwordHash", AccesLevel.ADMIN);
+            User adminBartVanLooveren = userDatabase.add("Bart van Looveren", "bart.van.looveren@student.khleuven.be", "passwordHash", AccesLevel.ADMIN);
+            
         } catch (DatabaseException exception) {
             Logger.getLogger(ContextListener.class.getName()).log(Level.SEVERE, exception.getMessage(), exception);
         }

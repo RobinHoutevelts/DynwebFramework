@@ -1,5 +1,6 @@
 package controller.handlers.ajax;
 
+import database.DatabaseException;
 import database.UserDatabase;
 import domain.User;
 
@@ -24,24 +25,35 @@ public class LoginAjaxHandler extends AjaxHandler {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String message = "User is not found.";
-        for (User u : this.userDatabase.getAll()) {
-            if (u.isRemoved()) continue;
-            if (u.getEmail().equals(email)) {
-                message = "Password is not correct.";
-                if (u.getPassword().equals(password)) {
-                    if (u.isBlocked()) {
-                        message = "Account is blocked.";
-                    } else {
-                        HttpSession session = request.getSession();
-                        session.setAttribute("user", u);
-                        session.setAttribute("alert", "You have logged in successfully.");
-                        session.setAttribute("alertType", "info");
-                        message = "";
-                        break;
-                    }
-                }
+        
+        User user = null;
+        try{
+            user = this.userDatabase.getByEmail(email);
+        }catch(DatabaseException e){
+            message = e.getMessage();
+        }
+        
+        if (user != null) {
+           try{
+               user = null;
+               user = this.userDatabase.getByCredentials(email, password);
+           }catch(DatabaseException e){
+               message = e.getMessage();
+           }
+        }
+        
+        if (user != null) {
+            if (user.isBlocked()) {
+                message = "Account is blocked.";
+            } else {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+                session.setAttribute("alert", "You have logged in successfully.");
+                session.setAttribute("alertType", "info");
+                message = "";
             }
         }
+
         return "<message>" + message + "</message>";
     }
 }
