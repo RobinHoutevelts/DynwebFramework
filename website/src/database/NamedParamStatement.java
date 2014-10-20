@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import sun.misc.Regexp;
-
 //http://stackoverflow.com/a/20644736/1306509
 public class NamedParamStatement {
     
