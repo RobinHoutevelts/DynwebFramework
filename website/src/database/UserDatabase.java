@@ -14,6 +14,4 @@ public interface UserDatabase {
     public User get(long id) throws DatabaseException;
 
     public Collection<User> getAll();
-
-    public void closeConnection();
 }

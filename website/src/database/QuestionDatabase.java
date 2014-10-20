@@ -14,6 +14,4 @@ public interface QuestionDatabase {
     public Question get(long id) throws DatabaseException;
 
     public Collection<Question> getAll();
-
-    public void closeConnection();
 }

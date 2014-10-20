@@ -8,11 +8,15 @@ import database.UserDatabase;
 
 public class WebService {
 
+    private Database database;
     private final QuestionDatabase questionDatabase;
     private final UserDatabase userDatabase;
 
+    /**
+     * Webservice als simpele Service Locator
+     */
     public WebService() {
-        Database database = new Database();
+        database = new Database();
         questionDatabase = new JDBCQuestionDatabase(database);
         userDatabase = new JDBCUserDatabase(database);
     }
@@ -28,7 +32,6 @@ public class WebService {
     }
 
     public void close() throws ServiceException {
-        questionDatabase.closeConnection();
-        userDatabase.closeConnection();
+        database.closeConnection();
     }
 }
