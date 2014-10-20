@@ -132,4 +132,14 @@ public class Database {
 
         return row;
     }
+    
+    public void closeConnection()
+    {
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            // TODO Exception-handling
+            e.printStackTrace();
+        }
+    }
 }
