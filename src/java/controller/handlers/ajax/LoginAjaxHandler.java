@@ -22,27 +22,26 @@ public class LoginAjaxHandler extends AjaxHandler {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String message = "User is not found.";
-        
+        String message = "";
         User user = null;
+        
         try{
-            user = this.userDatabase.getByEmail(email);
+            if(this.userDatabase.getByEmail(email) == null){
+                message = "User is not found."; // Wordt wss niet uitgevoerd door exception
+            }else{
+                // Gebruiker zoeken met e-mail en wachtwoord
+                user = this.userDatabase.getByCredentials(email, password);
+                password = null; // Uit het geheugen halen
+                
+                if (user == null) {
+                    message = "Password is not correct.";
+                }
+            }
         }catch(DatabaseException e){
             message = e.getMessage();
         }
         
         if (user != null) {
-           try{
-               user = null;
-               user = this.userDatabase.getByCredentials(email, password);
-           }catch(DatabaseException e){
-               message = e.getMessage();
-           }
-        }
-        
-        if (user == null) {
-            message = "Password is not correct.";
-        }else{
             if (user.isBlocked()) {
                 message = "Account is blocked.";
             } else {
