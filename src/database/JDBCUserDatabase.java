@@ -16,8 +16,7 @@ public class JDBCUserDatabase implements UserDatabase {
     @Override
     public boolean add(User user) throws DatabaseException {
         String sql = "INSERT INTO Users (name,email,removed,password,level)"
-                + "VALUES(:name ,:email ,:removed ,:password ,:level )";
-
+                + "VALUES(:name ,:email,:removed,:password,:level)";
         int id = 0;
         NamedParamStatement stmt;
         try {

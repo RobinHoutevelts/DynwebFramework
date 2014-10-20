@@ -17,12 +17,16 @@ public class NamedParamStatement {
         while((pos = sql.indexOf(":")) != -1) {
             int end = sql.substring(pos).indexOf(" ");
             if (end == -1)
+                end = sql.substring(pos).indexOf(",");
+            if (end == -1)
+                end = sql.substring(pos).indexOf(")");
+            if (end == -1)
                 end = sql.length();
             else
                 end += pos;
             fields.add(sql.substring(pos+1,end));
             sql = sql.substring(0, pos) + "?" + sql.substring(end);
-        }       
+        }
         prepStmt = conn.prepareStatement(sql);
     }
 
