@@ -9,24 +9,29 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import sun.misc.Regexp;
 
 //http://stackoverflow.com/a/20644736/1306509
 public class NamedParamStatement {
+    
+    private PreparedStatement prepStmt;
+    private List<String> fields = new ArrayList<String>();
+    
     public NamedParamStatement(Connection conn, String sql) throws SQLException {
-        int pos;
-        while((pos = sql.indexOf(":")) != -1) {
-            int end = sql.substring(pos).indexOf(" ");
-            if (end == -1)
-                end = sql.substring(pos).indexOf(",");
-            if (end == -1)
-                end = sql.substring(pos).indexOf(")");
-            if (end == -1)
-                end = sql.length();
-            else
-                end += pos;
-            fields.add(sql.substring(pos+1,end));
-            sql = sql.substring(0, pos) + "?" + sql.substring(end);
+
+        Pattern pattern = Pattern.compile(":(\\w+)");
+        Matcher matcher = pattern.matcher(sql);
+        
+        while(matcher.find()){
+            String fieldName = matcher.group(1);
+            fields.add(fieldName);
         }
+        
+        sql = sql.replaceAll(pattern.pattern(), "?");
+
         prepStmt = conn.prepareStatement(sql);
     }
 
@@ -83,6 +88,5 @@ public class NamedParamStatement {
     private int getIndex(String name) {
         return fields.indexOf(name)+1;
     }
-    private PreparedStatement prepStmt;
-    private List<String> fields = new ArrayList<String>();
+
 }
