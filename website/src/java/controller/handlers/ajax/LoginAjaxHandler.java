@@ -40,7 +40,9 @@ public class LoginAjaxHandler extends AjaxHandler {
            }
         }
         
-        if (user != null) {
+        if (user == null) {
+            message = "Password is not correct.";
+        }else{
             if (user.isBlocked()) {
                 message = "Account is blocked.";
             } else {
