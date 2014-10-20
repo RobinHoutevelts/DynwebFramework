@@ -78,9 +78,9 @@ public class Database {
      * @return
      * @throws SQLException
      */
-    static public ArrayList<HashMap<String, Object>> getAllRows(ResultSet res) throws SQLException
+    public ArrayList<DatabaseRow> getAllRows(ResultSet res) throws SQLException
     {
-        ArrayList<HashMap<String, Object>> rows = new ArrayList<HashMap<String, Object>>();
+        ArrayList<DatabaseRow> rows = new ArrayList<DatabaseRow>();
 
         // Cursor naar -1 zetten.
         res.beforeFirst();
@@ -88,7 +88,7 @@ public class Database {
         // Pas als we aan de EOL zitten van de resultset stoppen we
         while(!res.isAfterLast()) {
             // Row ophalen en toevoegen aan Arraylist
-            rows.add(Database.getRow(res));
+            rows.add(this.getRow(res));
         }
 
         res.close();
@@ -103,7 +103,7 @@ public class Database {
      * @return
      * @throws SQLException
      */
-    static public HashMap<String, Object> getRow(ResultSet res) throws SQLException
+    public DatabaseRow getRow(ResultSet res) throws SQLException
     {
         HashMap<String, Object> row = new HashMap<String, Object>();
 
@@ -130,7 +130,7 @@ public class Database {
             }
         }
 
-        return row;
+        return new DatabaseRow(row);
     }
     
     public void closeConnection()
