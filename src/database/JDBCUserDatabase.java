@@ -70,6 +70,7 @@ public class JDBCUserDatabase implements UserDatabase {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    @Override
     public User getByEmail(String email) throws DatabaseException
     {
         User user = null;
@@ -113,6 +114,7 @@ public class JDBCUserDatabase implements UserDatabase {
         return user;
     }
     
+    @Override
     public User getByCredentials(String email,String password) throws DatabaseException
     {
         User user = null;
