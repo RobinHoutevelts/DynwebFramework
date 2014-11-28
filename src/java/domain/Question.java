@@ -1,12 +1,6 @@
 package domain;
 
-import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="Questions")
-public class Question extends Identifiable implements Removable, Serializable {
+public class Question extends Identifiable implements Removable {
 
     private User user;
     private String text;
