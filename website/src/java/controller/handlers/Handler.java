@@ -3,14 +3,14 @@ package controller.handlers;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.WebService;
+import service.IoC;
 
 public abstract class Handler {
 
-    protected WebService webService;
+    protected IoC app;
 
-    public Handler(WebService webService) {
-        this.webService = webService;
+    public Handler(IoC app) {
+        this.app = app;
     }
 
     public abstract String execute(HttpServletRequest request, HttpServletResponse response);

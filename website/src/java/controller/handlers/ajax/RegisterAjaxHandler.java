@@ -2,12 +2,13 @@ package controller.handlers.ajax;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.WebService;
+
+import service.IoC;
 
 public class RegisterAjaxHandler extends AjaxHandler {
 
-    public RegisterAjaxHandler(WebService webService) {
-        super(webService);
+    public RegisterAjaxHandler(IoC app) {
+        super(app);
     }
 
     @Override

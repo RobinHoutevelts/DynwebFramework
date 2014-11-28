@@ -4,17 +4,18 @@ import controller.handlers.ajax.AjaxHandler;
 import database.DatabaseException;
 import database.UserDatabase;
 import domain.User;
-import service.WebService;
+import service.IoC;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class GetUserAjaxHandler extends AjaxHandler {
     protected UserDatabase userDatabase;
 
-    public GetUserAjaxHandler(WebService webService) {
-        super(webService);
-        this.userDatabase = webService.getUserDatabase();
-    }
+    public GetUserAjaxHandler(IoC app) {
+      super(app);
+      this.userDatabase = (UserDatabase) this.app.make("UserDatabase");
+  }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

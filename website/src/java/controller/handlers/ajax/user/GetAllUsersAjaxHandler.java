@@ -1,23 +1,20 @@
 package controller.handlers.ajax.user;
 
 import controller.handlers.ajax.AjaxHandler;
-import domain.Identifiable;
 import database.UserDatabase;
 import domain.User;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import service.WebService;
+
+import service.IoC;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class GetAllUsersAjaxHandler extends AjaxHandler {
 
     private UserDatabase userDatabase;
-    public GetAllUsersAjaxHandler(WebService webService) {
-        super(webService);
-        this.userDatabase = webService.getUserDatabase();
+    public GetAllUsersAjaxHandler(IoC app) {
+        super(app);
+        this.userDatabase = (UserDatabase) this.app.make("UserDatabase");
     }
 
     @Override

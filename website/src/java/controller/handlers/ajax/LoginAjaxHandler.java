@@ -8,14 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import service.WebService;
+import service.IoC;
 
 public class LoginAjaxHandler extends AjaxHandler {
 
     private UserDatabase userDatabase;
-    public LoginAjaxHandler(WebService webService) {
-        super(webService);
-        this.userDatabase = webService.getUserDatabase();
+    public LoginAjaxHandler(IoC app) {
+        super(app);
+        this.userDatabase = (UserDatabase) app.make("UserDatabase");
     }
 
     @Override

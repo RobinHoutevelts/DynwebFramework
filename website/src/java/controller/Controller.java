@@ -15,16 +15,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.IoC;
+
 @WebServlet(name = "Controller", urlPatterns = {"/c"})
 public class Controller extends HttpServlet {
 
-    private RequestHandlerFactory requestHandlerFactory;
+    private IoC app;
     private AjaxHandlerFactory ajaxHandlerFactory;
+    private RequestHandlerFactory requestHandlerFactory;
 
     @Override
     public void init() {
-        this.requestHandlerFactory = (RequestHandlerFactory) this.getServletContext().getAttribute("requestHandlerFactory");
-        this.ajaxHandlerFactory = (AjaxHandlerFactory) this.getServletContext().getAttribute("ajaxHandlerFactory");
+        this.app = (IoC) this.getServletContext().getAttribute("app");
+        this.ajaxHandlerFactory = (AjaxHandlerFactory) this.app.make("AjaxHandlerFactory");
+        this.requestHandlerFactory = (RequestHandlerFactory) this.app.make("RequestHandlerFactory");
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

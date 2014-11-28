@@ -5,16 +5,17 @@ import database.DatabaseException;
 import database.UserDatabase;
 import domain.AccesLevel;
 import domain.User;
-import service.WebService;
+import service.IoC;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class MakeUserAdminAjaxHandler extends AjaxHandler {
 
     private UserDatabase userDatabase;
-    public MakeUserAdminAjaxHandler(WebService webService) {
-        super(webService);
-        this.userDatabase = webService.getUserDatabase();
+    public MakeUserAdminAjaxHandler(IoC app) {
+      super(app);
+      this.userDatabase = (UserDatabase) this.app.make("UserDatabase");
     }
 
     @Override
