@@ -1,14 +1,15 @@
 package controller.handlers.ajax.question;
 
 import controller.handlers.ajax.AjaxHandler;
-import service.WebService;
+import service.IoC;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class GetQuestionAjaxHandler extends AjaxHandler {
 
-    public GetQuestionAjaxHandler(WebService webService) {
-        super(webService);
+    public GetQuestionAjaxHandler(IoC app) {
+        super(app);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package controller.handlers.request;
 
 import controller.handlers.Handler;
-import service.WebService;
+import service.IoC;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,8 +10,8 @@ public class RequestHandler extends Handler {
 
     private String view;
 
-    public RequestHandler(WebService webService, String view) {
-        super(webService);
+    public RequestHandler(IoC app, String view) {
+        super(app);
         this.view = view;
     }
 

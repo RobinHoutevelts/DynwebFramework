@@ -5,17 +5,18 @@ import database.DatabaseException;
 import database.UserDatabase;
 import domain.AccesLevel;
 import domain.User;
-import service.WebService;
+import service.IoC;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class UnblockUserAjaxHandler extends AjaxHandler {
 
     private UserDatabase userDatabase;
-    public UnblockUserAjaxHandler(WebService webService) {
-        super(webService);
-        this.userDatabase = webService.getUserDatabase();
-    }
+    public UnblockUserAjaxHandler(IoC app) {
+      super(app);
+      this.userDatabase = (UserDatabase) this.app.make("UserDatabase");
+  }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

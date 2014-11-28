@@ -4,7 +4,7 @@ import controller.handlers.ajax.AjaxHandler;
 import database.QuestionDatabase;
 import domain.Question;
 import domain.User;
-import service.WebService;
+import service.IoC;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 public class GetAllQuestionsAjaxHandler extends AjaxHandler {
 
     private QuestionDatabase questionDatabase;
-    public GetAllQuestionsAjaxHandler(WebService webService) {
-        super(webService);
-        this.questionDatabase = webService.getQuestionDatabase();
+    public GetAllQuestionsAjaxHandler(IoC app) {
+        super(app);
+        this.questionDatabase = (QuestionDatabase) this.app.make("QuestionDatabase");
     }
 
     @Override

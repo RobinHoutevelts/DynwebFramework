@@ -2,14 +2,16 @@ package controller.handlers.ajax.user;
 
 import controller.handlers.ajax.AjaxHandler;
 import domain.User;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.WebService;
+
+import service.IoC;
 
 public class GetUsersInfoAjaxHandler extends AjaxHandler {
 
-    public GetUsersInfoAjaxHandler(WebService webService) {
-        super(webService);
+    public GetUsersInfoAjaxHandler(IoC app) {
+        super(app);
     }
 
     @Override
