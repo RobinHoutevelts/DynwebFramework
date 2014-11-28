@@ -2,12 +2,7 @@ package domain;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="Users")
-public class User extends Identifiable implements Removable, Serializable {
+public class User extends Identifiable implements Removable {
 
     private String name;
     private String email;
