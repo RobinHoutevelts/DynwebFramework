@@ -101,10 +101,11 @@ public class JDBCUserDatabase implements UserDatabase {
                 long id = row.getLong("id");
                 email = row.getString("email");
                 String name = row.getString("name");
+                boolean removed = row.getBoolean("removed");
                 
                 AccesLevel level = AccesLevel.values()[row.getInt("level")];
    
-                user = new User(id,email,name,level);
+                user = new User(id,email,name,level,removed);
             }
             
         }catch(SQLException|DomainException e){
@@ -146,10 +147,11 @@ public class JDBCUserDatabase implements UserDatabase {
                 long id = row.getLong("id");
                 email = row.getString("email");
                 String name = row.getString("name");
+                boolean removed = row.getBoolean("removed");
                 
                 AccesLevel level = AccesLevel.values()[row.getInt("level")];
    
-                user = new User(id,email,name,level);
+                user = new User(id,email,name,level,removed);
             }
             
         }catch(SQLException|DomainException e){
