@@ -8,17 +8,14 @@ public class Question extends Identifiable implements Removable {
     private boolean reviewed;
     private boolean removed;
 
-    protected Question() {
-        this(null, null);
-    }
-
-    public Question(User user, String text) {
-        super();
-        Question.this.setUser(user);
-        Question.this.setText(text);
-        this.approved = false;
-        this.reviewed = false;
-        this.removed = false;
+    public Question(long id, User user, String text, boolean approved,
+            boolean reviewed, boolean removed) throws DomainException {
+        this.setUser(user);
+        this.setText(text);
+        this.setId(id);
+        this.approved = approved;
+        this.reviewed = reviewed;
+        this.removed = removed;
     }
 
     public User getUser() {
