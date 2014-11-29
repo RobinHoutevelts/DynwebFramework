@@ -86,6 +86,31 @@ public class TestJDBCUserDatabase {
         this.userDb.get(user.getId());
     }
     
+    @Test
+    public void test_it_updates_users() throws DatabaseException{
+        String naam = "Voornaam Achternaam";
+        String email = "voornaam.achternaam@student.khleuven.be";
+        String wachtwoord = "wachtwoord";
+        AccesLevel level = AccesLevel.USER_CREATED;
+
+        User user = this.userDb.add(naam,email,wachtwoord,level);
+        
+        // We krijgen een promotie!
+        
+        naam = "Dr. Voornaam Achternaam";
+        email = "andere.email@student.kuleuven.be";
+        level = AccesLevel.ADMIN;
+        
+        // Wijzigingen wegschrijven naar de databank
+        this.userDb.update(user);
+        
+        // Gebruiker opnieuw ophalen vanuit de databank
+        User userB = this.userDb.get(user.getId());
+        
+        // Gegevens zouden exact hetzelfde moeten zijn.
+        assertEquals(user, userB);
+    }
+    
     @Test(expected=DatabaseException.class)
     public void test_it_throws_exception_when_email_is_already_used() throws DatabaseException{
         String naam = "Voornaam Achternaam";
