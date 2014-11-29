@@ -13,6 +13,10 @@ public class Question extends Identifiable implements Removable {
         this.setUser(user);
         this.setText(text);
         this.setId(id);
+        
+        if(approved && !reviewed)
+            throw new DomainException("Een vraag kan niet approved zijn zonder te zijn gereviewed.");
+        
         this.approved = approved;
         this.reviewed = reviewed;
         this.removed = removed;
@@ -22,7 +26,9 @@ public class Question extends Identifiable implements Removable {
         return user;
     }
 
-    private void setUser(User user) {
+    private void setUser(User user) throws DomainException {
+        if(user == null)
+            throw new DomainException("User mag niet null zijn.");
         this.user = user;
     }
 
@@ -30,7 +36,9 @@ public class Question extends Identifiable implements Removable {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(String text) throws DomainException {
+        if(text.length() <= 0)
+            throw new DomainException("Vraag moet een body hebben.");
         this.text = text;
     }
 

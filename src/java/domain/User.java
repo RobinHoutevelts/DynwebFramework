@@ -1,5 +1,8 @@
 package domain;
 
+import org.apache.commons.validator.routines.EmailValidator;
+
+
 public class User extends Identifiable implements Removable {
 
     private String name;
@@ -20,7 +23,9 @@ public class User extends Identifiable implements Removable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws DomainException {
+        if (name.length() <= 0)
+            throw new DomainException("Naam mag niet leeg zijn.");
         this.name = name;
     }
 
@@ -28,15 +33,19 @@ public class User extends Identifiable implements Removable {
         return this.email;
     }
 
-    public void setEmail(String username) {
-        this.email = username;
+    public void setEmail(String email) throws DomainException {
+        if(!EmailValidator.getInstance().isValid(email))
+            throw new DomainException("Email heeft geen correcte format.");
+        this.email = email;
     }
 
     public AccesLevel getLevel() {
         return this.accesLevel;
     }
 
-    public void setAccesLevel(AccesLevel level) {
+    public void setAccesLevel(AccesLevel level) throws DomainException {
+        if(level == null)
+            throw new DomainException("AccessLevel mag niet null zijn.");
         this.accesLevel = level;
     }
 
