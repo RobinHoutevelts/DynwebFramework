@@ -7,14 +7,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import service.IoC;
+import framework.Container;
 
 public class AjaxHandlerFactory {
 
     private AjaxHandler[] ajaxHandlers;
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public AjaxHandlerFactory(IoC app) {
+    public AjaxHandlerFactory(Container app) {
 
         ajaxHandlers = new AjaxHandler[AjaxHandlers.values().length];
 
@@ -24,7 +24,7 @@ public class AjaxHandlerFactory {
 
             try {
                 Class ajaxHandlerClass = Class.forName(ah.getAjaxHandlerClass());
-                Constructor constructorClass = ajaxHandlerClass.getConstructor(IoC.class);
+                Constructor constructorClass = ajaxHandlerClass.getConstructor(Container.class);
                 ajaxHandler = (AjaxHandler) constructorClass.newInstance(app);
             }
             catch (ClassNotFoundException   | // Thrown by 'Class.forName(String)' if the class cannot be located.

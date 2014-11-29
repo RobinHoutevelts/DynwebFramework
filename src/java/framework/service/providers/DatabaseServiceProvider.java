@@ -1,12 +1,12 @@
-package service.providers;
+package framework.service.providers;
 
-import service.IoC;
-import service.IoCResolver;
 import database.Database;
 import database.JDBCQuestionDatabase;
 import database.JDBCUserDatabase;
 import database.QuestionDatabase;
 import database.UserDatabase;
+import framework.Container;
+import framework.service.Resolver;
 
 /**
  * Database ServiceProvider van HotProgrammers.net
@@ -14,7 +14,7 @@ import database.UserDatabase;
  */
 public class DatabaseServiceProvider implements ServiceProvider {
 
-    public void register(IoC app) {
+    public void register(Container app) {
         // Aanmaken Database
         // TODO: config uitlezen
         Database db = new Database();
@@ -24,7 +24,7 @@ public class DatabaseServiceProvider implements ServiceProvider {
         QuestionDatabase questionDb = new JDBCQuestionDatabase(db);
 
         // Objecten toevoegen aan de IoC-container
-        app.bind("Database", new IoCResolver() {
+        app.bind("Database", new Resolver() {
 
             @Override
             public Object resolve() {
@@ -32,14 +32,14 @@ public class DatabaseServiceProvider implements ServiceProvider {
             }
         });
 
-        app.bind("UserDatabase", new IoCResolver() {
+        app.bind("UserDatabase", new Resolver() {
             @Override
             public Object resolve() {
                 return userDb;
             }
         });
 
-        app.bind("QuestionDatabase", new IoCResolver() {
+        app.bind("QuestionDatabase", new Resolver() {
 
             @Override
             public Object resolve() {

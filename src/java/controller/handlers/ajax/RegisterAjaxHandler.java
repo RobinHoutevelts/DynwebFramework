@@ -3,11 +3,11 @@ package controller.handlers.ajax;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.IoC;
+import framework.Container;
 
 public class RegisterAjaxHandler extends AjaxHandler {
 
-    public RegisterAjaxHandler(IoC app) {
+    public RegisterAjaxHandler(Container app) {
         super(app);
     }
 

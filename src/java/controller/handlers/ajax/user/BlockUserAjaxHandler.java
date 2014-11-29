@@ -3,9 +3,9 @@ package controller.handlers.ajax.user;
 import controller.handlers.ajax.AjaxHandler;
 import database.DatabaseException;
 import database.UserDatabase;
-import service.IoC;
 import domain.User;
 import domain.AccesLevel;
+import framework.Container;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +14,7 @@ public class BlockUserAjaxHandler extends AjaxHandler {
 
     private UserDatabase userDatabase;
 
-    public BlockUserAjaxHandler(IoC app) {
+    public BlockUserAjaxHandler(Container app) {
         super(app);
         this.userDatabase = (UserDatabase) app.make("UserDatabase");
     }

@@ -5,7 +5,7 @@ import database.DatabaseException;
 import database.UserDatabase;
 import domain.AccesLevel;
 import domain.User;
-import service.IoC;
+import framework.Container;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class MakeUserAdminAjaxHandler extends AjaxHandler {
 
     private UserDatabase userDatabase;
-    public MakeUserAdminAjaxHandler(IoC app) {
+    public MakeUserAdminAjaxHandler(Container app) {
       super(app);
       this.userDatabase = (UserDatabase) this.app.make("UserDatabase");
     }

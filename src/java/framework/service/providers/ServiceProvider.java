@@ -1,6 +1,6 @@
-package service.providers;
+package framework.service.providers;
 
-import service.IoC;
+import framework.Container;
 
 /**
  * ServiceProviders zijn de backbone van de IoC container. Ze is
@@ -15,6 +15,6 @@ public interface ServiceProvider {
      * 
      * @param app
      */
-    public void register(IoC app);
+    public void register(Container app);
 
 }

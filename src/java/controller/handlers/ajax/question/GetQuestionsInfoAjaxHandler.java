@@ -5,11 +5,11 @@ import controller.handlers.ajax.AjaxHandler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.IoC;
+import framework.Container;
 
 public class GetQuestionsInfoAjaxHandler extends AjaxHandler {
 
-    public GetQuestionsInfoAjaxHandler(IoC app) {
+    public GetQuestionsInfoAjaxHandler(Container app) {
         super(app);
     }
 

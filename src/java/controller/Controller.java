@@ -15,18 +15,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.IoC;
+import framework.Container;
 
 @WebServlet(name = "Controller", urlPatterns = {"/c"})
 public class Controller extends HttpServlet {
 
-    private IoC app;
+    private Container app;
     private AjaxHandlerFactory ajaxHandlerFactory;
     private RequestHandlerFactory requestHandlerFactory;
 
     @Override
     public void init() {
-        this.app = (IoC) this.getServletContext().getAttribute("app");
+        this.app = (Container) this.getServletContext().getAttribute("app");
         this.ajaxHandlerFactory = (AjaxHandlerFactory) this.app.make("AjaxHandlerFactory");
         this.requestHandlerFactory = (RequestHandlerFactory) this.app.make("RequestHandlerFactory");
     }

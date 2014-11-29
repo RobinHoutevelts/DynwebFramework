@@ -1,14 +1,15 @@
 package controller.handlers.ajax.question;
 
 import controller.handlers.ajax.AjaxHandler;
-import service.IoC;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import framework.Container;
+
 public class RemoveQuestionAjaxHandler extends AjaxHandler {
 
-    public RemoveQuestionAjaxHandler(IoC app) {
+    public RemoveQuestionAjaxHandler(Container app) {
         super(app);
     }
 

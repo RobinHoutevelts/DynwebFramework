@@ -3,13 +3,13 @@ package controller.handlers;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.IoC;
+import framework.Container;
 
 public abstract class Handler {
 
-    protected IoC app;
+    protected Container app;
 
-    public Handler(IoC app) {
+    public Handler(Container app) {
         this.app = app;
     }
 

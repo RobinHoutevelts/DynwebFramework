@@ -1,14 +1,15 @@
 package controller.handlers.ajax.question;
 
 import controller.handlers.ajax.AjaxHandler;
-import service.IoC;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import framework.Container;
+
 public class DisapproveQuestionAjaxHandler extends AjaxHandler {
 
-    public DisapproveQuestionAjaxHandler(IoC app) {
+    public DisapproveQuestionAjaxHandler(Container app) {
         super(app);
     }
 

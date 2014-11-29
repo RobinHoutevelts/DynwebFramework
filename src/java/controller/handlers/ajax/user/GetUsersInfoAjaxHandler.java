@@ -2,15 +2,14 @@ package controller.handlers.ajax.user;
 
 import controller.handlers.ajax.AjaxHandler;
 import domain.User;
+import framework.Container;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.IoC;
-
 public class GetUsersInfoAjaxHandler extends AjaxHandler {
 
-    public GetUsersInfoAjaxHandler(IoC app) {
+    public GetUsersInfoAjaxHandler(Container app) {
         super(app);
     }
 
