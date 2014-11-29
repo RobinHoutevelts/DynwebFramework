@@ -1,5 +1,6 @@
 package framework.service.providers;
 
+import conf.Config;
 import database.Database;
 import database.JDBCQuestionDatabase;
 import database.JDBCUserDatabase;
@@ -19,8 +20,13 @@ public class DatabaseServiceProvider implements ServiceProvider {
 
     public void register(Container app) {
         // Aanmaken Database
-        // TODO: config uitlezen
-        Database db = new Database();
+        
+        String dbDriver = Config.get("dbDriver");
+        String dbConnectionUrl = Config.get("dbConnectionUrl");
+        String dbUsername = Config.get("dbUsername");
+        String dbPassword = Config.get("dbPassword");
+        
+        Database db = new Database(dbDriver,dbConnectionUrl,dbUsername,dbPassword);
         
         // Aanmaken Repositories
         UserDatabase userDb = new JDBCUserDatabase(db);
