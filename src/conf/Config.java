@@ -4,11 +4,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Properties;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 public class Config {
 
-    static private Properties config = new Properties();
+    static private Configuration config = new PropertiesConfiguration();
     static final private ClassLoader loader = Config.class.getClassLoader();
 
     /**
@@ -17,23 +22,24 @@ public class Config {
      * @param configName
      * @return
      */
-    static public String get(String name)
-    {
-        return config.getProperty(name);
+    static public String get(String name) {
+        return config.getString(name);
+    }
+    
+    static public List<Object> getList(String name) {
+        return config.getList(name);
     }
 
-    static public void set(String name, String value)
-    {
+    static public void set(String name, String value) {
         config.setProperty(name, value);
     }
 
     /**
      * Laad alle configuratiebestanden in
      */
-    static public void load()
-    {
+    static public void load() {
         // Is de config al ingelezen?
-        if(config.size() > 0)
+        if (!config.isEmpty())
             return;
 
         InputStream configDir = loader.getResourceAsStream("/conf");
@@ -48,15 +54,15 @@ public class Config {
 
                 i = filename.lastIndexOf('.');
                 if (i > 0) {
-                    extension = filename.substring(i+1);
+                    extension = filename.substring(i + 1);
                 }
 
                 if (extension.equals("properties")) {
-                    load("conf/"+filename);
+                    load("conf/" + filename);
                 }
             }
             dirContentReader.close();
-        } catch (IOException e) {
+        } catch (IOException | ConfigurationException e) {
             // TODO: exception handling
             e.printStackTrace();
         }
@@ -68,13 +74,20 @@ public class Config {
      * 
      * @param configFile
      * @throws IOException
+     * @throws ConfigurationException
      */
-    static private void load(String configFile) throws IOException
-    {
-        Properties properties = new Properties();
-        properties.load(loader.getResourceAsStream(configFile));
+    static private void load(String configFile) throws ConfigurationException {
+        Configuration properties = new PropertiesConfiguration(configFile);
 
-        config.putAll(properties);
+        Iterator<String> keyIterator = properties.getKeys();
+
+        // Alle waarden van het bestand kopieren naar de statische config
+        while (keyIterator.hasNext()) {
+            String key = keyIterator.next();
+
+            Object property = properties.getProperty(key);
+            config.setProperty(key, property);
+        }
     }
 
 }
