@@ -6,6 +6,9 @@ import database.JDBCUserDatabase;
 import database.QuestionDatabase;
 import database.UserDatabase;
 import framework.Container;
+import framework.event.Emitter;
+import framework.event.Event;
+import framework.event.EventHandler;
 import framework.service.Resolver;
 
 /**
@@ -44,6 +47,16 @@ public class DatabaseServiceProvider implements ServiceProvider {
             @Override
             public Object resolve() {
                 return questionDb;
+            }
+        });
+        
+        // Databaseverbinding sluiten
+        Emitter eventEmitter = (Emitter) app.make("EventEmitter");
+        eventEmitter.listen("contextDestroyed", new EventHandler() {
+            
+            @Override
+            public void handle(Event event) {
+                db.closeConnection();
             }
         });
     }
