@@ -3,6 +3,7 @@ package controller.handlers.ajax.user;
 import controller.handlers.ajax.AjaxHandler;
 import database.DatabaseException;
 import database.UserDatabase;
+import domain.DomainException;
 import domain.User;
 import domain.AccesLevel;
 import framework.Container;
@@ -39,7 +40,7 @@ public class BlockUserAjaxHandler extends AjaxHandler {
                     }
                 } catch (NumberFormatException exception) {
                     return "Parameter 'uid' must be of type long.";
-                } catch (DatabaseException exception) {
+                } catch (DatabaseException | DomainException exception) {
                     return exception.getMessage();
                 }
             }
