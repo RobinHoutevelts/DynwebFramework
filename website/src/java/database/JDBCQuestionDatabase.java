@@ -17,6 +17,10 @@ public class JDBCQuestionDatabase implements QuestionDatabase {
         this.database = database;
         this.userDatabase = userdatabase;
     }
+    
+    public Question add(User user, String text) throws DatabaseException{
+        return this.add(user, text, false, false, false);
+    }
 
     @Override
     public Question add(User user, String text, boolean approved,
@@ -48,8 +52,10 @@ public class JDBCQuestionDatabase implements QuestionDatabase {
         if(rowsAffected <= 0){
             throw new DatabaseException("Kon vraag niet toevoegen aan databank.");
         }
+        
         Question question = null;
         List<Question> questions = this.getByUser(user, text);
+                
         for(Question q : questions){
             if(!q.isReviewed()){
                 question = q;
@@ -83,7 +89,6 @@ public class JDBCQuestionDatabase implements QuestionDatabase {
             
             for(DatabaseRow row : rows){
                 // Object aanmaken
-                
                 long id = row.getLong("id");
                 String text = row.getString("text");
                 boolean reviewed = row.getBoolean("reviewed");
@@ -167,12 +172,12 @@ public class JDBCQuestionDatabase implements QuestionDatabase {
     @Override
     public void update(Question question) throws DatabaseException {
         String sql = "UPDATE Questions SET"
-                + "userid = :userId,"
-                + "text = :text,"
-                + "reviewed = :reviewed,"
-                + "approved = :approved,"
-                + "removed = :removed"
-                + "WHERE id = :id";
+                + " userid = :userId,"
+                + " text = :text,"
+                + " reviewed = :reviewed,"
+                + " approved = :approved,"
+                + " removed = :removed"
+                + " WHERE id = :id";
         try{
             NamedParamStatement stmt = this.database.namedParamStatement(sql);
             stmt.setLong("id", question.getId());
@@ -210,7 +215,7 @@ public class JDBCQuestionDatabase implements QuestionDatabase {
             if(row == null){
                 throw new DatabaseException("Kon vraag met id '"+id+"' niet vinden in de databank.");
             }
-
+            
             id = row.getLong("id");
             long userId = row.getLong("userid");
             String text = row.getString("text");
@@ -221,7 +226,7 @@ public class JDBCQuestionDatabase implements QuestionDatabase {
             User user = this.userDatabase.get(userId);
             
             question = new Question(id, user, text, approved, reviewed, removed);
-
+            
             stmt.close();
         }catch(SQLException | DomainException e){
             throw new DatabaseException(e);
