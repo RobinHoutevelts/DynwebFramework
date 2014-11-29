@@ -51,9 +51,6 @@ public class TestQuestion {
     Question question = null;
     question = this.createQuestion(1337, this.user, "Waarvoor wordt testing gebruikt?", false, false, false);
 
-    
-    System.out.println(question);
-    
     assertNotNull(question);
     assertFalse(question.isApproved());
     
