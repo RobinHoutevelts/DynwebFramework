@@ -1,11 +1,11 @@
-package service;
+package framework.service;
 
 /**
  * Resolver voor de IoC container. Is verantwoordelijk voor het aanmaken van een
  * concreet object.
  *
  */
-public interface IoCResolver {
+public interface Resolver {
 
     /**
      * Genereer een object

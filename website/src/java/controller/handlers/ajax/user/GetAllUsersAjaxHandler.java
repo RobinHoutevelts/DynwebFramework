@@ -3,8 +3,7 @@ package controller.handlers.ajax.user;
 import controller.handlers.ajax.AjaxHandler;
 import database.UserDatabase;
 import domain.User;
-
-import service.IoC;
+import framework.Container;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GetAllUsersAjaxHandler extends AjaxHandler {
 
     private UserDatabase userDatabase;
-    public GetAllUsersAjaxHandler(IoC app) {
+    public GetAllUsersAjaxHandler(Container app) {
         super(app);
         this.userDatabase = (UserDatabase) this.app.make("UserDatabase");
     }

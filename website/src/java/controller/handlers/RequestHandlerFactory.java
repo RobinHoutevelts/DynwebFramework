@@ -7,14 +7,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import service.IoC;
+import framework.Container;
 
 public class RequestHandlerFactory {
 
     private RequestHandler[] requestHandlers;
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public RequestHandlerFactory(IoC app) {
+    public RequestHandlerFactory(Container app) {
 
         requestHandlers = new RequestHandler[RequestHandlers.values().length];
 
@@ -24,7 +24,7 @@ public class RequestHandlerFactory {
 
             try {
                 Class requestHandlerClass = Class.forName(rh.getRequestHandlerClass());
-                Constructor constructorClass = requestHandlerClass.getConstructor(IoC.class, String.class);
+                Constructor constructorClass = requestHandlerClass.getConstructor(Container.class, String.class);
                 requestHandler = (RequestHandler) constructorClass.newInstance(app, rh.getView());
             }
             catch (ClassNotFoundException   | // Thrown by 'Class.forName(String)' if the class cannot be located.

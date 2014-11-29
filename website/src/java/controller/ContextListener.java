@@ -1,9 +1,5 @@
 package controller;
 
-import service.providers.DatabaseServiceProvider;
-import service.providers.RequestHandlersServiceProvider;
-import service.providers.ServiceProvider;
-
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,16 +8,19 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import service.IoC;
 import conf.Config;
 import database.DatabaseException;
 import database.UserDatabase;
 import domain.AccesLevel;
 import domain.User;
+import framework.Container;
+import framework.service.providers.DatabaseServiceProvider;
+import framework.service.providers.RequestHandlersServiceProvider;
+import framework.service.providers.ServiceProvider;
 
 public class ContextListener implements ServletContextListener {
 
-    private IoC app;
+    private Container app;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -30,7 +29,7 @@ public class ContextListener implements ServletContextListener {
         // Laad configuratiebestand
         Config.load();
 
-        this.app = new IoC();
+        this.app = new Container();
 
         // TODO: generate list of ServiceProviders
         ArrayList<ServiceProvider> providers = new ArrayList<ServiceProvider>();

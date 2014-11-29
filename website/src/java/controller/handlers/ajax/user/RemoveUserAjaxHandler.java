@@ -4,7 +4,7 @@ import controller.handlers.ajax.AjaxHandler;
 import database.DatabaseException;
 import database.UserDatabase;
 import domain.User;
-import service.IoC;
+import framework.Container;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class RemoveUserAjaxHandler extends AjaxHandler {
 
     private UserDatabase userDatabase;
-    public RemoveUserAjaxHandler(IoC app) {
+    public RemoveUserAjaxHandler(Container app) {
       super(app);
       this.userDatabase = (UserDatabase) this.app.make("UserDatabase");
   }

@@ -1,11 +1,11 @@
 package controller.handlers.ajax;
 
 import controller.handlers.Handler;
-import service.IoC;
+import framework.Container;
 
 public abstract class AjaxHandler extends Handler {
 
-    public AjaxHandler(IoC app) {
+    public AjaxHandler(Container app) {
         super(app);
     }
 }

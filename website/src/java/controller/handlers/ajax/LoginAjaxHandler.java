@@ -3,17 +3,16 @@ package controller.handlers.ajax;
 import database.DatabaseException;
 import database.UserDatabase;
 import domain.User;
+import framework.Container;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import service.IoC;
-
 public class LoginAjaxHandler extends AjaxHandler {
 
     private UserDatabase userDatabase;
-    public LoginAjaxHandler(IoC app) {
+    public LoginAjaxHandler(Container app) {
         super(app);
         this.userDatabase = (UserDatabase) app.make("UserDatabase");
     }

@@ -1,4 +1,4 @@
-package service;
+package framework.service;
 
 public class ServiceException extends Exception {
 

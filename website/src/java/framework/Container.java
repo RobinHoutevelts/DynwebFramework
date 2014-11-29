@@ -1,6 +1,8 @@
-package service;
+package framework;
 
 import java.util.HashMap;
+
+import framework.service.Resolver;
 
 /**
  * Inversion of Control Container
@@ -8,12 +10,12 @@ import java.util.HashMap;
  * Wordt gebruikt om dependencies doorheen de applicatie te centraliseren.
  *
  */
-public class IoC {
+public class Container {
 
     /**
-     * Hashmap met de binding
+     * Hashmap met de bindings
      */
-    private HashMap<String, IoCResolver> bindings = new HashMap<String, IoCResolver>();
+    private HashMap<String, Resolver> bindings = new HashMap<String, Resolver>();
 
     /**
      * Voeg een binding toe aan de IoC container
@@ -21,7 +23,7 @@ public class IoC {
      * @param name
      * @param resolver
      */
-    public void bind(String name, IoCResolver resolver) {
+    public void bind(String name, Resolver resolver) {
         this.bindings.put(name, resolver);
     }
 
@@ -33,7 +35,7 @@ public class IoC {
      */
     public Object make(String name) {
         // Zoek de bijhorende resolver
-        IoCResolver resolver = this.bindings.get(name);
+        Resolver resolver = this.bindings.get(name);
 
         return resolver.resolve();
     }
