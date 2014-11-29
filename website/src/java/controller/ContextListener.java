@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -8,18 +7,14 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import conf.Config;
 import database.DatabaseException;
 import database.UserDatabase;
 import domain.AccesLevel;
 import domain.User;
+import framework.Bootstrapper;
 import framework.Container;
 import framework.event.Emitter;
 import framework.event.Event;
-import framework.service.providers.DatabaseServiceProvider;
-import framework.service.providers.EventServiceProvider;
-import framework.service.providers.RequestHandlersServiceProvider;
-import framework.service.providers.ServiceProvider;
 
 public class ContextListener implements ServletContextListener {
 
@@ -28,24 +23,10 @@ public class ContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         /* Bootstrap Application */
-
-        // Laad configuratiebestand
-        Config.load();
-
         this.app = new Container();
-
-        // TODO: generate list of ServiceProviders
-        ArrayList<ServiceProvider> providers = new ArrayList<ServiceProvider>();
-
-        providers.add(new EventServiceProvider());
-        providers.add(new DatabaseServiceProvider());
-        providers.add(new RequestHandlersServiceProvider());
         
-
-        // Register serviceproviders
-        for (ServiceProvider provider : providers) {
-            provider.register(app);
-        }
+        Bootstrapper bootstrapper = new Bootstrapper(app);
+        bootstrapper.initialize();
 
         ServletContext context = sce.getServletContext();
         context.setAttribute("app", this.app);
