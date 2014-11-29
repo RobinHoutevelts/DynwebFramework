@@ -7,25 +7,27 @@ import framework.service.Resolver;
 
 public class RequestHandlersServiceProvider implements ServiceProvider {
 
-  @Override
-  public void register(Container app) {
-    AjaxHandlerFactory ajaxHandlerFactory = new AjaxHandlerFactory(app);
-    RequestHandlerFactory requestHandlerFactory = new RequestHandlerFactory(app);
-    
-    app.bind("AjaxHandlerFactory", new Resolver() {
-      @Override
-      public Object resolve() {
-        return ajaxHandlerFactory;
-      }
-    });
+    @Override
+    public void register(Container app) {
+        
+        // Aanmaken factories
+        AjaxHandlerFactory ajaxHandlerFactory = new AjaxHandlerFactory(app);
+        RequestHandlerFactory requestHandlerFactory = new RequestHandlerFactory(app);
 
-    app.bind("RequestHandlerFactory", new Resolver() {
-      @Override
-      public Object resolve() {
-        return requestHandlerFactory;
-      }
-    });
-  }
+        // Factories toevoegen aan IoC container
+        app.bind("AjaxHandlerFactory", new Resolver() {
+            @Override
+            public Object resolve() {
+                return ajaxHandlerFactory;
+            }
+        });
 
-  
+        app.bind("RequestHandlerFactory", new Resolver() {
+            @Override
+            public Object resolve() {
+                return requestHandlerFactory;
+            }
+        });
+    }
+
 }
