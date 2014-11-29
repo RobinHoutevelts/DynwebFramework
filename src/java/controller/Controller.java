@@ -33,9 +33,20 @@ public class Controller extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int identifier = Integer.parseInt(request.getParameter("a"));
-        Boolean ajax = (request.getParameter("x") != null);
 
-        Handler handler = ajax ? ajaxHandlerFactory.getAjaxHandler(identifier) : requestHandlerFactory.getRequestHandler(identifier);
+        String requestedWithHeader = request.getHeader("X-Requested-With");
+        Boolean ajax = false;
+        if (requestedWithHeader != null)
+            ajax = requestedWithHeader.equals("XMLHttpRequest");
+
+        // TODO: Extract Factories to interface
+        Handler handler;
+        if (ajax) {
+            handler = ajaxHandlerFactory.getAjaxHandler(identifier);
+        } else {
+            handler = requestHandlerFactory.getRequestHandler(identifier);
+        }
+
         String executeString = handler.execute(request, response);
 
         if (ajax) {
@@ -43,7 +54,8 @@ public class Controller extends HttpServlet {
                 response.setContentType("text/xml");
                 response.getWriter().write(executeString);
             } catch (IOException exception) {
-                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, exception);
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE,
+                        null, exception);
             }
         } else {
             response.setContentType("text/html;charset=UTF-8");
