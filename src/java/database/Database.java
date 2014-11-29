@@ -77,11 +77,20 @@ public class Database {
 
         // Cursor naar -1 zetten.
         res.beforeFirst();
-
-        // Pas als we aan de EOL zitten van de resultset stoppen we
-        while(!res.isAfterLast()) {
-            // Row ophalen en toevoegen aan Arraylist
-            rows.add(this.getRow(res));
+                
+        // Kijken of er op index 0 iets zit.
+        if(res.next()){
+            // Blijkbaar zijn er rows
+            // Cursor terug naar -1 zetten alle rows aflopen.
+            res.beforeFirst();
+            
+            // Pas als we aan de EOL zitten van de resultset stoppen we
+            while(!res.isAfterLast()) {
+                // Row ophalen en toevoegen aan Arraylist
+                DatabaseRow row = this.getRow(res);
+                if(row != null)
+                    rows.add(row);
+            }
         }
 
         res.close();
