@@ -14,7 +14,6 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 public class Config {
 
     static private Configuration config = new PropertiesConfiguration();
-    static final private ClassLoader loader = Config.class.getClassLoader();
 
     /**
      * Haalt een configwaarde uit de map src/conf
@@ -42,7 +41,8 @@ public class Config {
         if (!config.isEmpty())
             return;
 
-        InputStream configDir = loader.getResourceAsStream("/conf");
+        InputStream configDir = Config.class.getResourceAsStream("/conf");
+                
         BufferedReader dirContentReader = new BufferedReader(new InputStreamReader(configDir));
 
         String filename;

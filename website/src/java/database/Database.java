@@ -1,5 +1,6 @@
 package database;
 
+import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -18,12 +19,18 @@ public class Database {
     protected String username;
     protected String password; // TODO: kijken in hoeverre het haalbaar is het wachtwoord hier weg te laten
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public Database(String driver, String connectionUrl, String username, String password)
     {
         try {
             // Kijken of de driver bestaat
-            Class.forName(driver);
-        } catch (ClassNotFoundException e) {
+            Class DriverClass = Class.forName(driver);
+            
+            Constructor constructorClass = DriverClass.getConstructor();
+            Driver dbDriver = (Driver) constructorClass.newInstance();
+            DriverManager.registerDriver(dbDriver);
+            
+        } catch (Exception e) {
             // TODO Exception-handling
             e.printStackTrace();
         }
@@ -115,6 +122,9 @@ public class Database {
                 row.put(columnName,rowData);
             }
         }
+        
+        if(row.size() <= 0)
+            return null;
 
         return new DatabaseRow(row);
     }
