@@ -67,7 +67,7 @@ public interface UserDatabase {
      */
     public User getByCredentials(String email, String password) throws DatabaseException;
     
-    public Collection<User> getAll();
+    public Collection<User> getAll(int offset, int rowCount) throws DatabaseException;;
 
 
 }
