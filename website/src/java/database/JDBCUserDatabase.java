@@ -33,7 +33,7 @@ public class JDBCUserDatabase implements UserDatabase {
             stmt.setString("email", email);
             stmt.setBoolean("removed", false);
             stmt.setString("password", password);
-            stmt.setInt("level", level.getLevel());
+            stmt.setInt("level", level.ordinal());
 
             // Prepared Statement uitvoeren
             rowsAffected = stmt.executeUpdate();
@@ -57,7 +57,7 @@ public class JDBCUserDatabase implements UserDatabase {
     @Override
     public void remove(User user) throws DatabaseException {
         
-        String sql = "DELETE FROM users where id = :id";
+        String sql = "DELETE FROM Users where id = :id";
         int rowsAffected = 0;
         
         try{
@@ -80,7 +80,7 @@ public class JDBCUserDatabase implements UserDatabase {
     @Override
     public void update(User user) throws DatabaseException {
         
-        String sql = "UPDATE users SET "
+        String sql = "UPDATE Users SET "
                 + " name = :name,"
                 + " email = :email,"
                 + " removed = :removed,"
@@ -93,7 +93,7 @@ public class JDBCUserDatabase implements UserDatabase {
             stmt.setString("name", user.getName());
             stmt.setString("email", user.getEmail());
             stmt.setBoolean("removed", user.isRemoved());
-            stmt.setLong("levelId", user.getLevel().getLevel());
+            stmt.setLong("levelId", user.getLevel().ordinal());
             
             stmt.executeUpdate();
             stmt.close();
@@ -106,7 +106,7 @@ public class JDBCUserDatabase implements UserDatabase {
     public User get(long id) throws DatabaseException {
         
         String sql = "SELECT id,name,email,removed,level"
-                + " FROM users"
+                + " FROM Users"
                 + " WHERE id = :id";
        
         User user = null;
@@ -153,8 +153,9 @@ public class JDBCUserDatabase implements UserDatabase {
     {
         User user = null;
         
-        String sql = "SELECT id,name,email,removed,password,level FROM Users "
-                + "WHERE email = :email";
+        String sql = "SELECT id,name,email,removed,password,level"
+                + " FROM Users"
+                + " WHERE email = :email";
         
         try{
             // Prepared Statement maken
@@ -197,9 +198,10 @@ public class JDBCUserDatabase implements UserDatabase {
     public User getByCredentials(String email,String password) throws DatabaseException
     {
         User user = null;
-        String sql = "SELECT id,name,email,removed,password,level FROM Users "
-                + "WHERE email = :email "
-                + "AND   password = :password";
+        String sql = "SELECT id,name,email,removed,password,level"
+                + " FROM Users"
+                + " WHERE email = :email"
+                + " AND   password = :password";
         
         try{
             // Prepared Statement maken
@@ -229,7 +231,7 @@ public class JDBCUserDatabase implements UserDatabase {
                 
                 AccesLevel level = AccesLevel.values()[row.getInt("level")];
    
-                user = new User(id,email,name,level,removed);
+                user = new User(id,name,email,level,removed);
             }
             
         }catch(SQLException|DomainException e){
