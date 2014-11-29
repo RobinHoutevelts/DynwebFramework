@@ -24,7 +24,7 @@ public class DatabaseServiceProvider implements ServiceProvider {
         
         // Aanmaken Repositories
         UserDatabase userDb = new JDBCUserDatabase(db);
-        QuestionDatabase questionDb = new JDBCQuestionDatabase(db);
+        QuestionDatabase questionDb = new JDBCQuestionDatabase(db, userDb);
 
         // Objecten toevoegen aan de IoC-container
         app.bind("Database", new Resolver() {
