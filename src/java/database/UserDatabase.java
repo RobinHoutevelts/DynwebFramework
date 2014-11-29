@@ -27,7 +27,7 @@ public interface UserDatabase {
      * @return
      * @throws DatabaseException
      */
-    public boolean remove(User user) throws DatabaseException;
+    public void remove(User user) throws DatabaseException;
 
     /**
      * Schrijft eventuele wijzigingen weg naar de databank.
@@ -36,7 +36,7 @@ public interface UserDatabase {
      * @return
      * @throws DatabaseException
      */
-    public boolean update(User user) throws DatabaseException;
+    public void update(User user) throws DatabaseException;
 
     /**
      * Instantieert een gebruiker op basis van zijn Id
