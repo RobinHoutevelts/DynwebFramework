@@ -1,5 +1,5 @@
 #Database info
-dbhostname=hotprogrammers.net
-dbusername=dbusername
-dbpassword=dbpassword
-dbname=hotprogrammers
+dbDriver=com.mysql.jdbc.Driver
+dbConnectionUrl=jdbc:mysql://hostname/databasename
+dbUsername=username
+dbPassword=password

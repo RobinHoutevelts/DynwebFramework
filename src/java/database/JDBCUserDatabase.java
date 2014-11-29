@@ -138,7 +138,7 @@ public class JDBCUserDatabase implements UserDatabase {
                 
                 AccesLevel level = AccesLevel.values()[row.getInt("level")];
    
-                user = new User(id,email,name,level,removed);
+                user = new User(id,name,email,level,removed);
             }
             
         }catch(SQLException|DomainException e){
@@ -183,7 +183,7 @@ public class JDBCUserDatabase implements UserDatabase {
                 
                 AccesLevel level = AccesLevel.values()[row.getInt("level")];
    
-                user = new User(id,email,name,level,removed);
+                user = new User(id,name,email,level,removed);
             }
             
         }catch(SQLException|DomainException e){
