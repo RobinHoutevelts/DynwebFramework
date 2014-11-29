@@ -242,7 +242,7 @@ public class JDBCUserDatabase implements UserDatabase {
     }
 
     @Override
-    public Collection<User> getAll() {
+    public Collection<User> getAll(int offset, int rowCount) throws DatabaseException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

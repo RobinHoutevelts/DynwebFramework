@@ -23,5 +23,5 @@ public interface QuestionDatabase {
 
     public Question get(long id) throws DatabaseException;
 
-    public Collection<Question> getAll();
+    public Collection<Question> getAll(int offset, int rowCount) throws DatabaseException;
 }
