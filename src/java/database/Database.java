@@ -11,57 +11,41 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 
-import conf.Config;
-
 public class Database {
 
-    static protected Connection conn;
+    protected Connection conn;
+    protected String connectionUrl;
+    protected String username;
+    protected String password; // TODO: kijken in hoeverre het haalbaar is het wachtwoord hier weg te laten
 
-    public Database()
+    public Database(String driver, String connectionUrl, String username, String password)
     {
         try {
             // Kijken of de driver bestaat
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(driver);
         } catch (ClassNotFoundException e) {
             // TODO Exception-handling
             e.printStackTrace();
         }
+        
+        this.connectionUrl = connectionUrl;
+        this.username = username;
+        this.password = password;
     }
 
     /**
-     * Maakt connectie op basis van gegevens in het configuratiebestand
+     * Maakt connectie naar de databank
      * 
      * @return
      * @throws SQLException
      */
     public Connection getConnection() throws SQLException
     {
-        String hostname = Config.get("dbhostname");
-        String database = Config.get("dbname");
-        String username = Config.get("dbusername");
-        String password = Config.get("dbpassword");
-
-        return getConnection("jdbc:mysql://"+hostname+"/"+database,username,password);
+        if(this.conn == null || this.conn.isClosed())
+            this.conn = DriverManager.getConnection(connectionUrl,username,password);
+        
+        return this.conn;
     }
-
-    /**
-     * Maakt connectie naar de databank
-     * 
-     * @param connectionUrl
-     * @param username
-     * @param password
-     * @return
-     * @throws SQLException
-     */
-    static Connection getConnection(String connectionUrl,String username, String password) throws SQLException
-    {
-        if (conn == null || conn.isClosed())
-        {
-            conn = DriverManager.getConnection(connectionUrl,username,password);
-        }
-        return conn;
-    }
-
 
     public PreparedStatement prepareStatement(String query) throws SQLException
     {
