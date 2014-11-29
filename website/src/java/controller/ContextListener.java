@@ -14,7 +14,10 @@ import database.UserDatabase;
 import domain.AccesLevel;
 import domain.User;
 import framework.Container;
+import framework.event.Emitter;
+import framework.event.Event;
 import framework.service.providers.DatabaseServiceProvider;
+import framework.service.providers.EventServiceProvider;
 import framework.service.providers.RequestHandlersServiceProvider;
 import framework.service.providers.ServiceProvider;
 
@@ -34,8 +37,10 @@ public class ContextListener implements ServletContextListener {
         // TODO: generate list of ServiceProviders
         ArrayList<ServiceProvider> providers = new ArrayList<ServiceProvider>();
 
+        providers.add(new EventServiceProvider());
         providers.add(new DatabaseServiceProvider());
         providers.add(new RequestHandlersServiceProvider());
+        
 
         // Register serviceproviders
         for (ServiceProvider provider : providers) {
@@ -63,8 +68,11 @@ public class ContextListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        // TODO throw event
-        /* this.app.make("event").fire("contextDestroyed",sce); */
-        Logger.getLogger(ContextListener.class.getName()).log(Level.SEVERE,"WebService was not closed correctly!");
+        try {
+            Emitter eventEmitter = (Emitter) this.app.make("EventEmitter");
+            eventEmitter.fire(new Event("contextDestroyed"));
+        } catch (Exception e) {
+            Logger.getLogger(ContextListener.class.getName()).log(Level.SEVERE,"WebService was not closed correctly!", e);
+        }
     }
 }

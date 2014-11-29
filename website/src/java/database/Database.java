@@ -1,12 +1,14 @@
 package database;
 
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 
 import conf.Config;
@@ -133,10 +135,19 @@ public class Database {
         return new DatabaseRow(row);
     }
     
-    public void closeConnection()
-    {
+    public void closeConnection() {
         try {
             conn.close();
+            
+            // This manually deregisters JDBC driver, which prevents Tomcat 7
+            // from complaining about memory leaks wrto this class
+            // http://stackoverflow.com/a/5315467/1306509
+            Enumeration<Driver> drivers = DriverManager.getDrivers();
+            while (drivers.hasMoreElements()) {
+                Driver driver = drivers.nextElement();
+                DriverManager.deregisterDriver(driver);
+            }
+
         } catch (SQLException e) {
             // TODO Exception-handling
             e.printStackTrace();
