@@ -27,13 +27,20 @@ public class CreateUserCommand {
     }
 
     public void setName(String name) throws DomainException {
+        if(name == null)
+            throw new DomainException("Naam mag niet null zijn.");
+        
         name = name.trim();
         if(name.length() <= 0)
             throw new DomainException("Naam mag niet leeg zijn.");
+        
         this.name = name;
     }
 
     public void setEmail(String email) throws DomainException {
+        if(email == null)
+            throw new DomainException("Email mag niet null zijn.");
+        
         email = email.trim();
         if(email.length() <= 0)
             throw new DomainException("Email mag niet leeg zijn.");
