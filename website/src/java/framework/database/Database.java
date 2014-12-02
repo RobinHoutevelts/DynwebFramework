@@ -1,4 +1,4 @@
-package database;
+package framework.database;
 
 import java.lang.reflect.Constructor;
 import java.sql.Connection;

@@ -1,12 +1,12 @@
 package framework.service.providers;
 
-import conf.Config;
-import database.Database;
 import database.JDBCQuestionDatabase;
 import database.JDBCUserDatabase;
 import database.QuestionDatabase;
 import database.UserDatabase;
 import framework.Container;
+import framework.config.Config;
+import framework.database.Database;
 import framework.event.Emitter;
 import framework.event.Event;
 import framework.event.EventHandler;

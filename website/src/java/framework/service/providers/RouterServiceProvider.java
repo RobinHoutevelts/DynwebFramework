@@ -2,8 +2,8 @@ package framework.service.providers;
 
 import java.util.List;
 
-import conf.Config;
 import framework.Container;
+import framework.config.Config;
 import framework.http.router.Router;
 import framework.service.Resolver;
 

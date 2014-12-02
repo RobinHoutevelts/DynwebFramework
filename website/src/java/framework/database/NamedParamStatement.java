@@ -1,4 +1,4 @@
-package database;
+package framework.database;
 
 import java.sql.Array;
 import java.sql.Connection;
