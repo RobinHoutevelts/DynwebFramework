@@ -7,9 +7,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import conf.Config;
 import domain.AccesLevel;
 import domain.User;
+import framework.config.Config;
+import framework.database.Database;
 
 public class TestJDBCUserDatabase {
 
