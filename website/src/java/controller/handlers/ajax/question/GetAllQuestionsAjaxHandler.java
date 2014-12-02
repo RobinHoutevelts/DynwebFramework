@@ -1,6 +1,7 @@
 package controller.handlers.ajax.question;
 
 import controller.handlers.ajax.AjaxHandler;
+import database.DatabaseException;
 import database.QuestionDatabase;
 import domain.Question;
 import domain.User;
@@ -23,18 +24,23 @@ public class GetAllQuestionsAjaxHandler extends AjaxHandler {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         stringBuilder.append("<questions>");
-        for (Question q : this.questionDatabase.getAll()) {
-            if (q.isRemoved()) continue;
-            stringBuilder.append("<question>");
-            stringBuilder.append("<id>").append(q.getId()).append("</id>");
-            stringBuilder.append("<text>").append(q.getText()).append("</text>");
-            stringBuilder.append("<approved>").append(q.isApproved()).append("</approved>");
-            stringBuilder.append("<reviewed>").append(q.isReviewed()).append("</reviewed>");
-            stringBuilder.append("<userid>").append(q.getUser().getId()).append("</userid>");
-            stringBuilder.append("<name>").append(q.getUser().getName()).append("</name>");
-            stringBuilder.append("<level>").append(q.getUser().getLevel().getLevel()).append("</level>");
-            if (user != null && user.isAdmin()) stringBuilder.append("<email>").append(q.getUser().getEmail()).append("</email>");
-            stringBuilder.append("</user>");
+        try {
+            for (Question q : this.questionDatabase.getAll(1,1)) {
+                if (q.isRemoved()) continue;
+                stringBuilder.append("<question>");
+                stringBuilder.append("<id>").append(q.getId()).append("</id>");
+                stringBuilder.append("<text>").append(q.getText()).append("</text>");
+                stringBuilder.append("<approved>").append(q.isApproved()).append("</approved>");
+                stringBuilder.append("<reviewed>").append(q.isReviewed()).append("</reviewed>");
+                stringBuilder.append("<userid>").append(q.getUser().getId()).append("</userid>");
+                stringBuilder.append("<name>").append(q.getUser().getName()).append("</name>");
+                stringBuilder.append("<level>").append(q.getUser().getLevel().getLevel()).append("</level>");
+                if (user != null && user.isAdmin()) stringBuilder.append("<email>").append(q.getUser().getEmail()).append("</email>");
+                stringBuilder.append("</user>");
+            }
+        } catch (DatabaseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
         stringBuilder.append("</users>");
         return stringBuilder.toString();
