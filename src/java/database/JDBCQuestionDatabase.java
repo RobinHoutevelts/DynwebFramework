@@ -3,6 +3,9 @@ package database;
 import domain.DomainException;
 import domain.Question;
 import domain.User;
+import framework.database.Database;
+import framework.database.DatabaseRow;
+import framework.database.NamedParamStatement;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

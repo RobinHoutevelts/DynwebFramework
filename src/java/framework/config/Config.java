@@ -1,4 +1,4 @@
-package conf;
+package framework.config;
 
 import java.io.BufferedReader;
 import java.io.IOException;
