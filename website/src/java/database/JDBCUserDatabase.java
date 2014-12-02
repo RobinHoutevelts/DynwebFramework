@@ -245,4 +245,25 @@ public class JDBCUserDatabase implements UserDatabase {
     public Collection<User> getAll(int offset, int rowCount) throws DatabaseException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void changePassword(User user, String wachtwoord) throws DatabaseException {
+        String sql = "UPDATE Users "
+                + " SET wachtwoord = :wachtwoord"
+                + " WHERE id       = :userId";
+        
+        
+        try {
+            NamedParamStatement stmt = this.db.namedParamStatement(sql);
+            
+            stmt.setLong("userId", user.getId());
+            stmt.setString("wachtwoord", wachtwoord);
+            
+            stmt.executeQuery();
+            
+            stmt.close();
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
+        }
+    }
 }
