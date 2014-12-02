@@ -15,7 +15,7 @@ import framework.Container;
 import framework.http.Request;
 import framework.http.Response;
 
-public class RouterFilter implements Filter {
+public class RouteFilter implements Filter {
 
     @Override
     public void init(FilterConfig config) throws ServletException {}
