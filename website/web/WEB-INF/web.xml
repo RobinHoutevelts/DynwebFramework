@@ -4,6 +4,14 @@
         <description>ServletContextListener</description>
         <listener-class>controller.ContextListener</listener-class>
     </listener>
+    <filter>
+        <filter-name>Router</filter-name>
+        <filter-class>framework.http.router.RouteFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Router</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>Controller</servlet-name>
         <servlet-class>controller.Controller</servlet-class>
