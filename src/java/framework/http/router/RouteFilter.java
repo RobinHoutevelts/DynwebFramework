@@ -45,7 +45,7 @@ public class RouteFilter implements Filter {
         
         String requestMethod = request.getMethod();
 
-        Resolver resolver = router.getResolver(URI,requestMethod);
+        Resolver resolver = router.getResolverByUrl(URI,requestMethod);
         
         if(resolver != null)
             resolver.resolve(request, response);

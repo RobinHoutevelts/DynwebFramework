@@ -13,6 +13,7 @@ public class RouterServiceProvider implements ServiceProvider {
     public void register(Container app) {
 
         Router router = new Router(app);
+        framework.html.Router htmlRouter = new framework.html.Router(router);
 
         List<Object> ignored = Config.getList("router.ignore");
         
@@ -25,6 +26,13 @@ public class RouterServiceProvider implements ServiceProvider {
             @Override
             public Object resolve() {
                 return router;
+            }
+        });
+        
+        app.bind("HtmlRouter", new Resolver() {
+            @Override
+            public Object resolve() {
+                return htmlRouter;
             }
         });
 
