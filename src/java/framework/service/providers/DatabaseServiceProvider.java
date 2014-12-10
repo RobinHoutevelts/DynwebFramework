@@ -58,7 +58,7 @@ public class DatabaseServiceProvider implements ServiceProvider {
         
         // Databaseverbinding sluiten
         Emitter eventEmitter = (Emitter) app.make("EventEmitter");
-        eventEmitter.listen("contextDestroyed", new EventHandler() {
+        eventEmitter.listen("context.destroyed", new EventHandler() {
             
             @Override
             public void handle(Event event) {
