@@ -13,6 +13,8 @@ public class EventEmitter implements Emitter {
 
         String eventName = event.getEventName();
         List<EventHandler> handlers = this.eventListeners.get(eventName);
+        if(handlers == null)
+            return;
         for (EventHandler handler : handlers) {
             handler.handle(event);
         }
