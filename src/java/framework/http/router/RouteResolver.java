@@ -8,16 +8,16 @@ import java.util.HashMap;
 import javax.servlet.ServletException;
 
 import framework.Container;
-import framework.http.Controller;
 import framework.http.Request;
 import framework.http.Response;
+import framework.http.controllers.Controller;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class RouteResolver implements Resolver {
 
     private Container app;
     private Route route;
-
+    
     public RouteResolver(Container app, Route route){
         this.app = app;
         this.route = route;
@@ -40,13 +40,15 @@ public class RouteResolver implements Resolver {
         try {
             Constructor constructorClass = controllerClass.getConstructor(Container.class);
             Controller controller = (Controller) constructorClass.newInstance(this.app);
-            Method method = controllerClass.getMethod(methodName,Request.class, Response.class);
+            controller.setRequest(request);
+            controller.setResponse(response);
+            Method method = controllerClass.getMethod(methodName);
 
-            method.invoke(controller, request, response);
+            method.invoke(controller);
         }catch( InstantiationException
                 | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException | IllegalAccessException e) {
-            throw new ServletException("Could not resolve Controller '"+ controllerClass.getName() + "@" + methodName+ "'",e);
+            throw new ServletException("Error executing '"+ controllerClass.getName() + "@" + methodName+ "'",e);
         }
         
     }

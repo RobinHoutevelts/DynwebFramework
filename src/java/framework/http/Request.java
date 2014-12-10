@@ -13,6 +13,14 @@ public class Request extends HttpServletRequestWrapper {
         super(request);
     }
     
+    public boolean isAjax(){
+        String header = this.getHeader("X-Requested-With");
+        if(header == null)
+            return false;
+        
+        return header.equals("XMLHttpRequest");
+    }
+    
     public String getParameter(String name){
         if(this.params.containsKey(name))
             return this.params.get(name);

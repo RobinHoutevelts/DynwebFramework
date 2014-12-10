@@ -12,18 +12,34 @@ public class Route {
     protected String name;
     protected String regex;
     
+    protected List<String> httpMethods;
+    
     protected Class controllerClass;
     protected String methodName;
     
     protected List<String> parameterNames;
     protected Resolver resolver;
     
-    public Route(String name, String regex, Class controllerClass, String methodName){
+    public Route(String name, String regex, Class controllerClass, String methodName, List<String> supportedHttpMethods){
         this.setName(name);
         this.setRegex(regex);
         this.setControllerClass(controllerClass);
         this.setMethodName(methodName);
+        
+        for(String httpMethod: supportedHttpMethods)
+            this.addHttpMethod(httpMethod);
+        
         this.parameterNames = new ArrayList<String>();
+    }
+    
+    public void addHttpMethod(String httpMethod){
+        httpMethod = httpMethod.toLowerCase();
+        this.httpMethods.add(httpMethod);
+    }
+    
+    public boolean supportsHttpMethod(String httpMethod){
+        httpMethod = httpMethod.toLowerCase();
+        return this.httpMethods.contains(httpMethod);
     }
 
     public String getName() {
@@ -88,10 +104,10 @@ public class Route {
         return parameters;
     }
     
-    public String injectParameters(HashMap<String, String> parameters){
+    public String injectParameters(List<String> parameters){
         String url = this.regex;
         
-        for(String parameter : parameters.values()){
+        for(String parameter : parameters){
             url = url.replaceFirst("(\\(\\[\\^/\\]\\+\\))", parameter);
         }
         
