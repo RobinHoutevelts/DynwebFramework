@@ -2,6 +2,7 @@ package framework.service.providers;
 
 import java.util.List;
 
+
 import framework.Container;
 import framework.config.Config;
 import framework.http.router.Router;
@@ -13,8 +14,7 @@ public class RouterServiceProvider implements ServiceProvider {
     public void register(Container app) {
 
         Router router = new Router(app);
-        framework.html.Router htmlRouter = new framework.html.Router(router);
-
+        
         List<Object> ignored = Config.getList("router.ignore");
         
         for (Object ignoreObject : ignored) {
@@ -28,14 +28,6 @@ public class RouterServiceProvider implements ServiceProvider {
                 return router;
             }
         });
-        
-        app.bind("HtmlRouter", new Resolver() {
-            @Override
-            public Object resolve() {
-                return htmlRouter;
-            }
-        });
-
     }
 
 }

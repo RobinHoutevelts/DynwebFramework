@@ -1,6 +1,8 @@
 package framework.html;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import framework.http.router.Route;
 
@@ -13,27 +15,36 @@ public class Router {
     }
     
     public String getUrl(String name){
-        return this.getUrl(name,null);
+        return this.getUrl(name,"");
     }
     
-    public String getUrl(String name, HashMap<String, String> parameters){
+    public String getUrl(String name, String parameters){
+        parameters = parameters.trim();
         String url = "";
-        Route route = this.router.getGetRouteByName(name);
+        
+        // goh, ik ga ervanuit dat je niet een naam gaat gebruiken voor
+        // verschillende urls..
+        
+        // bvb GET  users.create /users/create
+        // en  POST users.create /users/store
+        // da zou ni lukken
+        
+        Route route = this.router.getRouteByName(name,"get");
         if(route == null)
-            route = this.router.getPostRouteByName(name);
+            route = this.router.getRouteByName(name,"post");
         
         if(route == null)
             return url;
         
-        
-        
+        List<String> params = new ArrayList<String>(Arrays.asList(parameters.split(",")));
+
         url = route.getRegex();
         url = url.substring(0, url.length()-3);
         
-        if(parameters == null)
+        if(params.size() <= 0)
             return url;
         
-        url = route.injectParameters(parameters);
+        url = route.injectParameters(params);
         
         return url;
     }
