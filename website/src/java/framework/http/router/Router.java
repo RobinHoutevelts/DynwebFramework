@@ -13,8 +13,7 @@ public class Router {
     
     protected List<String> ignored = new ArrayList<String>();
     
-    protected HashMap<Route, Resolver> Getroutes = new HashMap<Route, Resolver>();
-    protected HashMap<Route, Resolver> Postroutes = new HashMap<Route, Resolver>();
+    protected HashMap<Route, Resolver> routes = new HashMap<Route, Resolver>();
     protected Container app;
     
     public Router(Container app){
@@ -26,57 +25,68 @@ public class Router {
         this.ignored.add(string);
     }
     
-    public void get(String name, String url, String action) throws Exception {
-        Route route = createRoute(name, url, action);
+    public Route get(String name, String url, String action) throws Exception {
+        ArrayList<String> supportedHttpMethods = new ArrayList<String>();
+        supportedHttpMethods.add("get");
+        
+        Route route = createRoute(name, url, action, supportedHttpMethods);
         Resolver resolver = new RouteResolver(this.app, route);
         
-        this.get(route, resolver);
-    }
-
-    public void post(Route route, Resolver resolver){
-        this.Postroutes.put(route, resolver);
+        this.addRoute(route, resolver);
+        
+        return route;
     }
     
-    public void post(String name, String url, String action) throws Exception {
-        Route route = createRoute(name, url, action);
+    public Route post(String name, String url, String action) throws Exception {
+        ArrayList<String> supportedHttpMethods = new ArrayList<String>();
+        supportedHttpMethods.add("post");
+        
+        Route route = createRoute(name, url, action, supportedHttpMethods);
         Resolver resolver = new RouteResolver(this.app, route);
         
-        this.post(route, resolver);
-    }
-
-    public void get(Route route, Resolver resolver){
-        this.Getroutes.put(route, resolver);
+        this.addRoute(route, resolver);
+        
+        return route;
     }
     
-    public void both(String name, String url, String action) throws Exception{
-        Route route = createRoute(name, url, action);
+    public Route both(String name, String url, String action) throws Exception{
+        ArrayList<String> supportedHttpMethods = new ArrayList<String>();
+        supportedHttpMethods.add("get");
+        supportedHttpMethods.add("post");
+        
+        Route route = createRoute(name, url, action, supportedHttpMethods);
         Resolver resolver = new RouteResolver(this.app, route);
         
-        this.both(route, resolver);
+        this.addRoute(route, resolver);
+        
+        return route;
     }
 
-    private Route createRoute(String name, String url, String action)
+    public void addRoute(Route route, Resolver resolver){
+        this.routes.put(route, resolver);
+    }
+
+    private Route createRoute(String name, String url, String action, List<String> supportedHttpMethods)
             throws Exception {
         String regex = this.regexify(url);
         
         Class controllerClass = this.getControllerClass(action);
         String methodName         = this.getMethodName(action);
         
-        Route route = new Route(name, regex, controllerClass, methodName);
+        Route route = new Route(name, regex, controllerClass, methodName, supportedHttpMethods);
         return route;
     }
     
-    public void both(Route route, Resolver resolver){
-        this.Getroutes.put(route, resolver);
-        this.Postroutes.put(route, resolver);
+    public Route getRouteByURL(String url){
+        return this.getRouteByURL(url, "get");
     }
     
-    public Route getGetRouteByURL(String url)
+    public Route getRouteByURL(String url, String httpMethod)
     {
         Route route = null;
         
-        for(Route r : this.Getroutes.keySet()){
-            if(r.urlMatches(url)){
+        for(Route r : this.routes.keySet()){
+            if(r.urlMatches(url) && r.supportsHttpMethod(httpMethod)){
                 route = r;
                 break;
             }
@@ -85,12 +95,16 @@ public class Router {
         return route;
     }
     
-    public Route getGetRouteByName(String name)
+    public Route getRouteByName(String name){
+        return this.getRouteByName(name, "get");
+    }
+    
+    public Route getRouteByName(String name, String httpMethod)
     {
         Route route = null;
         
-        for(Route r : this.Getroutes.keySet()){
-            if(r.getName().equals(name)){
+        for(Route r : this.routes.keySet()){
+            if(r.getName().equals(name) && r.supportsHttpMethod(httpMethod)){
                 route = r;
                 break;
             }
@@ -99,49 +113,11 @@ public class Router {
         return route;
     }
     
-    public Route getPostRouteByURL(String url)
-    {
-        Route route = null;
-        
-        for(Route r : this.Postroutes.keySet()){
-            if(r.urlMatches(url)){
-                route = r;
-                break;
-            }
-        }
-        
-        return route;
-    }
-    
-    public Route getPostRouteByName(String name)
-    {
-        Route route = null;
-        
-        for(Route r : this.Postroutes.keySet()){
-            if(r.getName().equals(name)){
-                route = r;
-                break;
-            }
-        }
-        
-        return route;
-    }
-    
-    public Resolver getGetResolver(String url){
+    public Resolver getResolver(Route route){
         Resolver resolver = null;
-        Route route = this.getGetRouteByURL(url);
+
         if(route != null)
-            resolver =this.Getroutes.get(route);
-        
-        return resolver;
-    }
-    
-    public Resolver getPostResolver(String url)
-    {
-        Resolver resolver = null;
-        Route route = this.getPostRouteByURL(url);
-        if(route != null)
-            resolver =this.Postroutes.get(route);
+            resolver = this.routes.get(route);
         
         return resolver;
     }
@@ -199,35 +175,4 @@ public class Router {
             throw new Exception(e);
         }
     }
-
-    public Resolver getResolverByUrl(String url, String requestMethod) {
-        requestMethod = requestMethod.toUpperCase();
-        
-        Resolver resolver = null;
-        if(requestMethod.equals("GET"))
-            resolver = this.getGetResolver(url);
-        else
-            resolver = this.getPostResolver(url);
-        
-        return resolver;
-    }
-    
-    public Resolver getResolverByName(String name, String requestMethod) {
-        requestMethod = requestMethod.toUpperCase();
-        
-        Route route = null;
-        Resolver resolver = null;
-        if(requestMethod.equals("GET")){
-            route = this.getGetRouteByURL(name);
-            if(route != null)
-                resolver = this.Getroutes.get(route);
-        }else{
-            route = this.getPostRouteByName(name);
-            if(route != null)
-                resolver = this.Postroutes.get(route);
-        }
-        
-        return resolver;
-    }
-
 }
