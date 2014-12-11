@@ -10,19 +10,18 @@ import framework.Container;
 
 @SuppressWarnings("rawtypes")
 public class Router {
-    
-    protected List<String> ignored = new ArrayList<String>();
-    
+        
     protected HashMap<Route, Resolver> routes = new HashMap<Route, Resolver>();
     protected Container app;
+    
+    protected boolean includeContextPath = true;
     
     public Router(Container app){
         this.app =  app;
     }
     
-    public void addIgnore(String string)
-    {
-        this.ignored.add(string);
+    public void includeContextPath(boolean ignore){
+        this.includeContextPath = ignore;
     }
     
     public Route get(String name, String url, String action) throws Exception {
@@ -72,8 +71,13 @@ public class Router {
         
         Class controllerClass = this.getControllerClass(action);
         String methodName         = this.getMethodName(action);
-        
+        List<String> parameterNames = this.getParameterNames(url);
+                
         Route route = new Route(name, regex, controllerClass, methodName, supportedHttpMethods);
+        
+        for(String parameterName : parameterNames)
+            route.addParameter(parameterName);
+        
         return route;
     }
     
@@ -85,6 +89,11 @@ public class Router {
     {
         Route route = null;
         
+        url = this.trimUrl(url);
+        
+        if(this.includeContextPath)
+            url = this.prependContextPath(url);
+                
         for(Route r : this.routes.keySet()){
             if(r.urlMatches(url) && r.supportsHttpMethod(httpMethod)){
                 route = r;
@@ -93,6 +102,14 @@ public class Router {
         }
         
         return route;
+    }
+    
+    public String prependContextPath(String url)
+    {
+        String contextPath = this.app.getContext().getContextPath();
+        url = contextPath + url;
+        
+        return url;
     }
     
     public Route getRouteByName(String name){
@@ -122,9 +139,27 @@ public class Router {
         return resolver;
     }
     
+    private List<String> getParameterNames(String url){
+        url = this.trimUrl(url);
+        List<String> parameterNames = new ArrayList<String>();
+        
+        Pattern pattern = Pattern.compile(":(\\w+)");
+        Matcher matcher = pattern.matcher(url);
+        
+        while(matcher.find()){
+            String val = matcher.group(1);
+            parameterNames.add(val);
+        }
+        
+        return parameterNames;
+    }
+    
     private String regexify(String url) throws Exception{
         url = this.trimUrl(url);
- 
+        
+        if(this.includeContextPath)
+            url = this.prependContextPath(url);
+         
         Pattern pattern = Pattern.compile(":(\\w+)");
         Matcher matcher = pattern.matcher(url);
             
@@ -137,10 +172,6 @@ public class Router {
     
     private String trimUrl(String url){
         url = url.trim();
-                
-        for(String ignore : this.ignored){
-            url = url.replaceAll(ignore, "");
-        }
                 
         // Change "/foo/bar/baz/" to /foo/bar/baz
         // Also   "//foo/bar/baz//"
