@@ -2,6 +2,8 @@ package framework;
 
 import java.util.HashMap;
 
+import javax.servlet.ServletContext;
+
 import framework.service.Resolver;
 
 /**
@@ -16,6 +18,7 @@ public class Container {
      * Hashmap met de bindings
      */
     private HashMap<String, Resolver> bindings = new HashMap<String, Resolver>();
+    private ServletContext context;
 
     /**
      * Voeg een binding toe aan de IoC container
@@ -38,5 +41,14 @@ public class Container {
         Resolver resolver = this.bindings.get(name);
 
         return resolver.resolve();
+    }
+
+    public void setContext(ServletContext context) {
+        this.context = context;
+    }
+    
+    public ServletContext getContext()
+    {
+        return this.context;
     }
 }

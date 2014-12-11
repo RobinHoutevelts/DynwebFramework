@@ -13,6 +13,7 @@ import framework.event.Bag;
 import framework.event.Emitter;
 import framework.event.Event;
 import framework.event.EventEmitter;
+import framework.service.Resolver;
 
 public class ContextListener implements ServletContextListener {
 
@@ -23,11 +24,12 @@ public class ContextListener implements ServletContextListener {
         /* Bootstrap Application */
         this.app = new Container();
         
-        Bootstrapper bootstrapper = new Bootstrapper(app);
-        bootstrapper.initialize();
-
         ServletContext context = sce.getServletContext();
         context.setAttribute("app", this.app);
+        this.app.setContext(context);
+
+        Bootstrapper bootstrapper = new Bootstrapper(app);
+        bootstrapper.initialize();
 
         EventEmitter emitter = (EventEmitter) this.app.make("EventEmitter");
         
