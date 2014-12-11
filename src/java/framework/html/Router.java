@@ -15,11 +15,11 @@ public class Router {
     }
     
     public String getUrl(String name){
-        return this.getUrl(name,"");
+        return this.getUrl(name,null);
     }
     
     public String getUrl(String name, String parameters){
-        parameters = parameters.trim();
+        
         String url = "";
         
         // goh, ik ga ervanuit dat je niet een naam gaat gebruiken voor
@@ -32,19 +32,20 @@ public class Router {
         Route route = this.router.getRouteByName(name,"get");
         if(route == null)
             route = this.router.getRouteByName(name,"post");
-        
+                
         if(route == null)
             return url;
         
-        List<String> params = new ArrayList<String>(Arrays.asList(parameters.split(",")));
-
         url = route.getRegex();
+        
+        if(parameters != null){
+            parameters = parameters.trim();
+            List<String> params = new ArrayList<String>(Arrays.asList(parameters.split(",")));
+            
+            url = route.injectParameters(params);
+        }
+        
         url = url.substring(0, url.length()-3);
-        
-        if(params.size() <= 0)
-            return url;
-        
-        url = route.injectParameters(params);
         
         return url;
     }
