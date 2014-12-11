@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 public class Request extends HttpServletRequestWrapper {
     
     private HashMap<String, String> params  = new HashMap<String, String>();
+    private Session session;
 
     public Request(HttpServletRequest request) {
         super(request);
@@ -30,6 +31,18 @@ public class Request extends HttpServletRequestWrapper {
     
     public void addParameter(String name, String value){
         this.params.put(name, value);
+    }
+    
+    public void setSession(Session session){
+        this.session = session;
+    }
+    
+    public Session getSession(){
+        return this.session;
+    }
+    
+    public Session getSession(boolean create){
+        return this.session;
     }
 
 }
