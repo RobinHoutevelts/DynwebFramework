@@ -109,6 +109,9 @@ public class Route {
         String url = this.regex;
         
         for(String parameter : parameters){
+            if(parameter == null)
+                continue;
+            parameter = parameter.trim();
             url = url.replaceFirst("(\\(\\[\\^/\\]\\+\\))", parameter);
         }
         
