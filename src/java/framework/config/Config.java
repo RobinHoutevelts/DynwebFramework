@@ -22,7 +22,15 @@ public class Config {
      * @return
      */
     static public String get(String name) {
-        return config.getString(name);
+        return get(name, null);
+    }
+    
+    static public String get(String name, String defaultValue) {
+        String value = config.getString(name);
+        if(value == null)
+            value = defaultValue;
+        
+        return value;
     }
     
     static public List<Object> getList(String name) {
