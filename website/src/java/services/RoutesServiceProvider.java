@@ -13,7 +13,6 @@ public class RoutesServiceProvider implements ServiceProvider {
         try {
             // Enter routes here
             router.get("home", "/", "controller.HomeController@index");
-            router.get("test", "/test/:id", "controller.HomeController@test");
 
         } catch (Exception e) {
             System.out.println(e.getStackTrace());

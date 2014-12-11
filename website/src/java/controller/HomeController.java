@@ -14,10 +14,6 @@ public class HomeController extends Controller{
     public void index() throws ServletException {
         this.dispatch("welcome.jsp");
     }
-    
-    public void test() throws ServletException {
-        this.dispatch("welcome.jsp");
-    }
 
     
 }
