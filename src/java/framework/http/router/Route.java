@@ -21,15 +21,16 @@ public class Route {
     protected Resolver resolver;
     
     public Route(String name, String regex, Class controllerClass, String methodName, List<String> supportedHttpMethods){
+        this.parameterNames = new ArrayList<String>();
+        this.httpMethods = new ArrayList<String>();
+        
         this.setName(name);
         this.setRegex(regex);
         this.setControllerClass(controllerClass);
         this.setMethodName(methodName);
         
-        for(String httpMethod: supportedHttpMethods)
+        for(String httpMethod : supportedHttpMethods)
             this.addHttpMethod(httpMethod);
-        
-        this.parameterNames = new ArrayList<String>();
     }
     
     public void addHttpMethod(String httpMethod){
