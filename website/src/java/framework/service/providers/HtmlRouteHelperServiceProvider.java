@@ -12,13 +12,16 @@ public class HtmlRouteHelperServiceProvider implements ServiceProvider {
 
         Router htmlRouter = new Router(router);
         
+        // HtmlRouter aan ServletContext hangen zodat deze beschikbaar is vanuit de views
+        app.getContext().setAttribute("Router", htmlRouter);
+                
         app.bind("HtmlRouter", new Resolver() {
-            
             @Override
             public Object resolve() {
                 return htmlRouter;
             }
         });
+        
     }
     
     
