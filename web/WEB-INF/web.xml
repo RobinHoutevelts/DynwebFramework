@@ -6,7 +6,7 @@
     </listener>
     <filter>
         <filter-name>Router</filter-name>
-        <filter-class>framework.http.router.RouteFilter</filter-class>
+        <filter-class>framework.listener.RouteFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>Router</filter-name>
