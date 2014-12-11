@@ -1,9 +1,5 @@
 package framework.service.providers;
 
-import database.JDBCQuestionDatabase;
-import database.JDBCUserDatabase;
-import database.QuestionDatabase;
-import database.UserDatabase;
 import framework.Container;
 import framework.config.Config;
 import framework.database.Database;
@@ -26,11 +22,10 @@ public class DatabaseServiceProvider implements ServiceProvider {
         String dbUsername = Config.get("dbUsername");
         String dbPassword = Config.get("dbPassword");
         
-        Database db = new Database(dbDriver,dbConnectionUrl,dbUsername,dbPassword);
+        if(dbDriver == null || dbConnectionUrl == null || dbUsername == null || dbPassword == null)
+            return;
         
-        // Aanmaken Repositories
-        UserDatabase userDb = new JDBCUserDatabase(db);
-        QuestionDatabase questionDb = new JDBCQuestionDatabase(db, userDb);
+        Database db = new Database(dbDriver,dbConnectionUrl,dbUsername,dbPassword);
 
         // Objecten toevoegen aan de IoC-container
         app.bind("Database", new Resolver() {
@@ -38,21 +33,6 @@ public class DatabaseServiceProvider implements ServiceProvider {
             @Override
             public Object resolve() {
                 return db;
-            }
-        });
-
-        app.bind("UserDatabase", new Resolver() {
-            @Override
-            public Object resolve() {
-                return userDb;
-            }
-        });
-
-        app.bind("QuestionDatabase", new Resolver() {
-
-            @Override
-            public Object resolve() {
-                return questionDb;
             }
         });
         
