@@ -17,6 +17,7 @@ import framework.event.Event;
 import framework.event.EventEmitter;
 import framework.http.Request;
 import framework.http.Response;
+import framework.http.Session;
 import framework.http.router.Resolver;
 import framework.http.router.Route;
 import framework.http.router.Router;
@@ -60,7 +61,9 @@ public class RouteFilter implements Filter {
         Router router = (Router) app.make("Router");
         EventEmitter emitter = (EventEmitter) app.make("EventEmitter");
         
+        Session session = new Session(req.getSession(true));
         Request request = new Request(req);
+                request.setSession(session);
         Response response = new Response(res);
         
         String URI = request.getRequestURI().replaceAll(request.getContextPath(), "");
