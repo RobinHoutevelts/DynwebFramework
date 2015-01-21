@@ -49,7 +49,7 @@ public class Config {
         if (!config.isEmpty())
             return;
 
-        InputStream configDir = Config.class.getResourceAsStream("/conf");
+        InputStream configDir = Config.class.getResourceAsStream("/");
                 
         BufferedReader dirContentReader = new BufferedReader(new InputStreamReader(configDir));
 
@@ -66,7 +66,7 @@ public class Config {
                 }
 
                 if (extension.equals("properties")) {
-                    load("conf/" + filename);
+                    load(filename);
                 }
             }
             dirContentReader.close();
